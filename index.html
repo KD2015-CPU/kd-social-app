@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KD Notifications</title>
+    <title>KD Search</title>
 
     <style>
         body {
@@ -30,71 +30,64 @@
             padding: 15px;
         }
 
-        .card {
+        .search-box {
             background: white;
+            padding: 20px;
             border-radius: 15px;
-            overflow: hidden;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        .title {
-            padding: 20px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .notification {
+        .search-row {
             display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 16px 20px;
-            border-bottom: 1px solid #eee;
-            cursor: pointer;
+            gap: 10px;
         }
 
-        .notification:last-child {
-            border-bottom: none;
-        }
-
-        .icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: #eeeeee;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            flex-shrink: 0;
-        }
-
-        .notification-text {
+        input {
             flex: 1;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
         }
 
-        .notification-text strong {
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .time {
-            font-size: 12px;
-            color: #777;
-        }
-
-        .unread {
-            background: #f7f7f7;
-        }
-
-        .clear-btn {
-            width: calc(100% - 30px);
-            margin: 15px;
-            padding: 12px;
+        .search-button {
+            padding: 13px 18px;
             border: none;
-            border-radius: 9px;
+            border-radius: 10px;
             background: #222;
             color: white;
-            font-size: 16px;
             cursor: pointer;
+            font-size: 16px;
+        }
+
+        .results {
+            margin-top: 20px;
+        }
+
+        .result {
+            background: white;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+
+        .result strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .type {
+            color: #777;
+            font-size: 13px;
+        }
+
+        .empty {
+            text-align: center;
+            color: #666;
+            padding: 20px;
         }
     </style>
 </head>
@@ -103,66 +96,115 @@
 
 <header>
     <h1>KD</h1>
-    <p>Notifications</p>
+    <p>Search KD</p>
 </header>
 
 <div class="container">
 
-    <div class="card" id="notificationList">
+    <div class="search-box">
+        <h2>🔍 Search</h2>
 
-        <div class="title">
-            <h2>🔔 Notifications</h2>
+        <div class="search-row">
+            <input
+                id="searchInput"
+                type="text"
+                placeholder="Search people, posts, groups..."
+                onkeydown="handleEnter(event)"
+            >
+
+            <button class="search-button" onclick="searchKD()">
+                Search
+            </button>
         </div>
 
-        <div class="notification unread">
-            <div class="icon">❤️</div>
-            <div class="notification-text">
-                <strong>KD User liked your post</strong>
-                <span class="time">2 minutes ago</span>
+        <div class="results" id="results">
+            <div class="empty">
+                Type something to search KD.
             </div>
         </div>
-
-        <div class="notification unread">
-            <div class="icon">💬</div>
-            <div class="notification-text">
-                <strong>KD Creator commented on your post</strong>
-                <span class="time">10 minutes ago</span>
-            </div>
-        </div>
-
-        <div class="notification">
-            <div class="icon">👤</div>
-            <div class="notification-text">
-                <strong>KD User started following you</strong>
-                <span class="time">1 hour ago</span>
-            </div>
-        </div>
-
-        <div class="notification">
-            <div class="icon">💬</div>
-            <div class="notification-text">
-                <strong>You received a new message</strong>
-                <span class="time">2 hours ago</span>
-            </div>
-        </div>
-
-        <button class="clear-btn" onclick="clearNotifications()">
-            Mark All as Read
-        </button>
-
     </div>
 
 </div>
 
 <script>
-function clearNotifications() {
-    const notifications = document.querySelectorAll(".notification");
+const kdData = [
+    {
+        name: "KD User",
+        type: "Person",
+        description: "KD social app user"
+    },
+    {
+        name: "KD Creator",
+        type: "Creator",
+        description: "Video and content creator"
+    },
+    {
+        name: "KD Community",
+        type: "Group",
+        description: "Community for KD users"
+    },
+    {
+        name: "Welcome to KD",
+        type: "Post",
+        description: "Your social world starts here"
+    }
+];
 
-    notifications.forEach(function (notification) {
-        notification.classList.remove("unread");
+function searchKD() {
+    const query = document.getElementById("searchInput").value
+        .trim()
+        .toLowerCase();
+
+    const results = document.getElementById("results");
+
+    if (query === "") {
+        results.innerHTML =
+            '<div class="empty">Please enter something to search.</div>';
+        return;
+    }
+
+    const matches = kdData.filter(function (item) {
+        return (
+            item.name.toLowerCase().includes(query) ||
+            item.type.toLowerCase().includes(query) ||
+            item.description.toLowerCase().includes(query)
+        );
     });
 
-    alert("All notifications marked as read.");
+    if (matches.length === 0) {
+        results.innerHTML =
+            '<div class="empty">No results found.</div>';
+        return;
+    }
+
+    results.innerHTML = "";
+
+    matches.forEach(function (item) {
+        const result = document.createElement("div");
+        result.className = "result";
+
+        const title = document.createElement("strong");
+        title.textContent = item.name;
+
+        const type = document.createElement("div");
+        type.className = "type";
+        type.textContent = item.type;
+
+        const description = document.createElement("div");
+        description.textContent = item.description;
+
+        result.appendChild(title);
+        result.appendChild(type);
+        result.appendChild(description);
+
+        results.appendChild(result);
+    });
+}
+
+function handleEnter(event) {
+    if (event.key === "Enter") {
+        searchKD();
+    }
 }
 </script>
 
