@@ -9,17 +9,43 @@
 
 <body>
 
-    <h1>KD SOCIAL APP</h1>
-    <p>Welcome to KD!</p>
+    <header>
+        <h1>KD</h1>
+        <p>Connect • Share • Discover</p>
+    </header>
 
-    <button onclick="document.getElementById('welcome').style.display='block'">
-        Start KD
-    </button>
+    <main>
 
-    <div id="welcome" style="display:none; margin-top:20px;">
-        <h2>Welcome to KD 🎉</h2>
-        <p>Your social app is starting.</p>
-    </div>
+        <div class="welcome-card">
+            <h2>Welcome to KD</h2>
+            <p>Your social world starts here.</p>
+
+            <button onclick="document.getElementById('home').style.display='block'; this.style.display='none';">
+                Start KD
+            </button>
+        </div>
+
+        <div id="home" style="display:none;">
+
+            <div class="post-card">
+                <h3>My First Post</h3>
+                <p>Welcome to my KD social app! 🎉</p>
+                <button onclick="alert('You liked this post! ❤️')">
+                    ❤️ Like
+                </button>
+            </div>
+
+            <div class="post-card">
+                <h3>KD Community</h3>
+                <p>Connect with friends and share your moments.</p>
+                <button onclick="alert('Coming soon!')">
+                    Explore KD
+                </button>
+            </div>
+
+        </div>
+
+    </main>
 
 </body>
 </html>
