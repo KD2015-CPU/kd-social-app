@@ -13,7 +13,7 @@
         }
 
         header {
-            background: #ffffff;
+            background: white;
             padding: 18px;
             text-align: center;
             border-bottom: 1px solid #ddd;
@@ -24,53 +24,56 @@
             font-size: 36px;
         }
 
-        header p {
-            margin: 5px 0 0;
-            color: #666;
-        }
-
         .container {
-            max-width: 600px;
-            margin: 25px auto;
-            padding: 0 15px;
+            max-width: 450px;
+            margin: 35px auto;
+            padding: 15px;
         }
 
         .card {
             background: white;
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 25px;
             border-radius: 15px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        .welcome {
+        h2 {
             text-align: center;
         }
 
-        .menu {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
         }
 
-        .menu button {
-            padding: 15px;
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 10px;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 16px;
             cursor: pointer;
+        }
+
+        .login-btn {
+            background: #222;
+            color: white;
+        }
+
+        .signup-btn {
             background: #eeeeee;
         }
 
-        .post h3 {
-            margin-top: 0;
-        }
-
-        .post button {
-            padding: 10px 18px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
+        #message {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -84,31 +87,45 @@
 
 <div class="container">
 
-    <div class="card welcome">
-        <h2>Welcome to KD</h2>
-        <p>Your social world starts here.</p>
-    </div>
-
     <div class="card">
-        <h2>KD Menu</h2>
+        <h2>Login to KD</h2>
 
-        <div class="menu">
-            <button>🏠 Home</button>
-            <button>👤 Profile</button>
-            <button>➕ Create Post</button>
-            <button>🔍 Search</button>
-            <button>💬 Messages</button>
-            <button>🔔 Notifications</button>
-        </div>
-    </div>
+        <input type="text" id="username" placeholder="Username or Email">
 
-    <div class="card post">
-        <h3>My First KD Post</h3>
-        <p>Welcome to the KD Social App! 🎉</p>
-        <button onclick="alert('Liked! ❤️')">❤️ Like</button>
+        <input type="password" id="password" placeholder="Password">
+
+        <button class="login-btn" onclick="login()">
+            Login
+        </button>
+
+        <button class="signup-btn" onclick="signup()">
+            Create New Account
+        </button>
+
+        <div id="message"></div>
     </div>
 
 </div>
+
+<script>
+function login() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const message = document.getElementById("message");
+
+    if (username === "" || password === "") {
+        message.textContent = "Please enter your username and password.";
+        return;
+    }
+
+    message.textContent = "Demo login successful! Welcome to KD 🎉";
+}
+
+function signup() {
+    const message = document.getElementById("message");
+    message.textContent = "KD account creation will be added next.";
+}
+</script>
 
 </body>
 </html>
