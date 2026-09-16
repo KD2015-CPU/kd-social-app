@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KD Social App</title>
-
     <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
@@ -14,14 +12,14 @@
     <h1>KD SOCIAL APP</h1>
     <p>Welcome to KD!</p>
 
-    <a href="https://kd2015-cpu.github.io/kd-social-app/" class="start-button">Start KD</a>
-    <script src="app.js"></script>
+    <button onclick="document.getElementById('welcome').style.display='block'">
+        Start KD
+    </button>
 
-    <script>
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("service-worker.js");
-        }
-    </script>
+    <div id="welcome" style="display:none; margin-top:20px;">
+        <h2>Welcome to KD 🎉</h2>
+        <p>Your social app is starting.</p>
+    </div>
 
 </body>
 </html>
