@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KD Create Post</title>
+
+    <title>KD Social App - Feed</title>
 
     <style>
         body {
@@ -14,69 +15,87 @@
 
         header {
             background: white;
-            padding: 18px;
+            padding: 15px;
             text-align: center;
             border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
         }
 
         header h1 {
             margin: 0;
-            font-size: 36px;
+            font-size: 34px;
         }
 
         .container {
             max-width: 600px;
-            margin: 25px auto;
-            padding: 15px;
-        }
-
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        textarea {
-            width: 100%;
-            min-height: 120px;
-            padding: 12px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            font-size: 16px;
-            resize: vertical;
-        }
-
-        button {
-            width: 100%;
-            padding: 13px;
-            margin-top: 12px;
-            border: none;
-            border-radius: 8px;
-            background: #222;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
+            margin: 20px auto;
+            padding: 10px;
         }
 
         .post {
-            background: #f7f7f7;
+            background: white;
+            margin-bottom: 20px;
             padding: 18px;
-            border-radius: 10px;
-            margin-top: 15px;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        .post-name {
+        .user {
             font-weight: bold;
-            margin-bottom: 8px;
+            font-size: 18px;
+            margin-bottom: 12px;
         }
 
-        .post-time {
-            font-size: 12px;
-            color: #777;
+        .post-text {
+            font-size: 17px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .actions button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: #eeeeee;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .actions button:hover {
+            background: #dddddd;
+        }
+
+        .comments {
+            margin-top: 15px;
+            display: none;
+        }
+
+        .comments input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .comments button {
+            margin-top: 8px;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .comment-list {
             margin-top: 10px;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -85,63 +104,96 @@
 
 <header>
     <h1>KD</h1>
-    <p>Create and share</p>
+    <div>Home Feed</div>
 </header>
 
 <div class="container">
 
-    <div class="card">
-        <h2>Create Post</h2>
+    <div class="post">
+        <div class="user">KD User</div>
 
-        <textarea id="postText" placeholder="What's on your mind?"></textarea>
+        <div class="post-text">
+            Welcome to KD Social App! 🎉
+        </div>
 
-        <button onclick="createPost()">Publish Post</button>
+        <div class="actions">
+            <button onclick="likePost(this)">❤️ Like</button>
+            <button onclick="toggleComments(this)">💬 Comment</button>
+            <button onclick="sharePost()">↗️ Share</button>
+        </div>
+
+        <div class="comments">
+            <input type="text" placeholder="Write a comment...">
+            <button onclick="addComment(this)">Post Comment</button>
+            <div class="comment-list"></div>
+        </div>
     </div>
 
-    <div class="card">
-        <h2>My Posts</h2>
 
-        <div id="posts">
-            <p id="emptyMessage">No posts yet.</p>
+    <div class="post">
+        <div class="user">KD Creator</div>
+
+        <div class="post-text">
+            This is the second post on KD. 🚀
+        </div>
+
+        <div class="actions">
+            <button onclick="likePost(this)">❤️ Like</button>
+            <button onclick="toggleComments(this)">💬 Comment</button>
+            <button onclick="sharePost()">↗️ Share</button>
+        </div>
+
+        <div class="comments">
+            <input type="text" placeholder="Write a comment...">
+            <button onclick="addComment(this)">Post Comment</button>
+            <div class="comment-list"></div>
         </div>
     </div>
 
 </div>
 
 <script>
-function createPost() {
-    const text = document.getElementById("postText").value.trim();
+function likePost(button) {
+    if (button.textContent === "❤️ Like") {
+        button.textContent = "❤️ Liked";
+    } else {
+        button.textContent = "❤️ Like";
+    }
+}
+
+function toggleComments(button) {
+    const post = button.closest(".post");
+    const comments = post.querySelector(".comments");
+
+    if (comments.style.display === "block") {
+        comments.style.display = "none";
+    } else {
+        comments.style.display = "block";
+    }
+}
+
+function addComment(button) {
+    const comments = button.parentElement;
+    const input = comments.querySelector("input");
+    const list = comments.querySelector(".comment-list");
+
+    const text = input.value.trim();
 
     if (text === "") {
-        alert("Please write something first.");
+        alert("Please write a comment.");
         return;
     }
 
-    const posts = document.getElementById("posts");
+    const comment = document.createElement("p");
+    comment.textContent = "KD User: " + text;
 
-    const emptyMessage = document.getElementById("emptyMessage");
-    if (emptyMessage) {
-        emptyMessage.remove();
-    }
+    list.appendChild(comment);
 
-    const post = document.createElement("div");
-    post.className = "post";
-
-    post.innerHTML = `
-        <div class="post-name">KD User</div>
-        <div>${escapeHTML(text)}</div>
-        <div class="post-time">Just now</div>
-    `;
-
-    posts.prepend(post);
-
-    document.getElementById("postText").value = "";
+    input.value = "";
 }
 
-function escapeHTML(text) {
-    const div = document.createElement("div");
-    div.textContent = text;
-    return div.innerHTML;
+function sharePost() {
+    alert("Share feature will be connected to real sharing later.");
 }
 </script>
 
