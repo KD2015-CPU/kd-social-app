@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KD Profile</title>
+    <title>KD Create Post</title>
 
     <style>
         body {
@@ -24,7 +24,7 @@
             font-size: 36px;
         }
 
-        .profile {
+        .container {
             max-width: 600px;
             margin: 25px auto;
             padding: 15px;
@@ -32,58 +32,27 @@
 
         .card {
             background: white;
-            padding: 25px;
+            padding: 20px;
             border-radius: 15px;
             margin-bottom: 20px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        .profile-top {
-            text-align: center;
-        }
-
-        .avatar {
-            width: 110px;
-            height: 110px;
-            margin: 0 auto 15px;
-            border-radius: 50%;
-            background: #dddddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-        }
-
-        .username {
-            font-size: 25px;
-            font-weight: bold;
-        }
-
-        .bio {
-            color: #666;
-            margin-top: 8px;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            text-align: center;
-            margin-top: 25px;
-        }
-
-        .stats strong {
-            display: block;
-            font-size: 22px;
-        }
-
-        .stats span {
-            color: #666;
-        }
-
-        .edit-btn {
+        textarea {
             width: 100%;
+            min-height: 120px;
             padding: 12px;
-            margin-top: 20px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 12px;
             border: none;
             border-radius: 8px;
             background: #222;
@@ -93,10 +62,21 @@
         }
 
         .post {
+            background: #f7f7f7;
             padding: 18px;
             border-radius: 10px;
-            background: #f7f7f7;
-            margin-top: 12px;
+            margin-top: 15px;
+        }
+
+        .post-name {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .post-time {
+            font-size: 12px;
+            color: #777;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -105,58 +85,65 @@
 
 <header>
     <h1>KD</h1>
+    <p>Create and share</p>
 </header>
 
-<div class="profile">
+<div class="container">
 
-    <div class="card profile-top">
+    <div class="card">
+        <h2>Create Post</h2>
 
-        <div class="avatar">
-            👤
-        </div>
+        <textarea id="postText" placeholder="What's on your mind?"></textarea>
 
-        <div class="username">
-            KD User
-        </div>
-
-        <div class="bio">
-            Welcome to my KD profile!
-        </div>
-
-        <div class="stats">
-            <div>
-                <strong>0</strong>
-                <span>Posts</span>
-            </div>
-
-            <div>
-                <strong>0</strong>
-                <span>Followers</span>
-            </div>
-
-            <div>
-                <strong>0</strong>
-                <span>Following</span>
-            </div>
-        </div>
-
-        <button class="edit-btn" onclick="alert('Edit Profile coming next!')">
-            Edit Profile
-        </button>
-
+        <button onclick="createPost()">Publish Post</button>
     </div>
 
     <div class="card">
         <h2>My Posts</h2>
 
-        <div class="post">
-            <strong>My First KD Post</strong>
-            <p>Welcome to KD Social App! 🎉</p>
+        <div id="posts">
+            <p id="emptyMessage">No posts yet.</p>
         </div>
-
     </div>
 
 </div>
+
+<script>
+function createPost() {
+    const text = document.getElementById("postText").value.trim();
+
+    if (text === "") {
+        alert("Please write something first.");
+        return;
+    }
+
+    const posts = document.getElementById("posts");
+
+    const emptyMessage = document.getElementById("emptyMessage");
+    if (emptyMessage) {
+        emptyMessage.remove();
+    }
+
+    const post = document.createElement("div");
+    post.className = "post";
+
+    post.innerHTML = `
+        <div class="post-name">KD User</div>
+        <div>${escapeHTML(text)}</div>
+        <div class="post-time">Just now</div>
+    `;
+
+    posts.prepend(post);
+
+    document.getElementById("postText").value = "";
+}
+
+function escapeHTML(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+}
+</script>
 
 </body>
 </html>
