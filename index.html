@@ -4,48 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KD Social App</title>
-    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f4f8;
+            text-align: center;
+            margin: 0;
+            padding: 30px 15px;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 5px;
+        }
+
+        .tagline {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        button {
+            padding: 14px 28px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #home {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: white;
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 15px;
+        }
+    </style>
 </head>
 
 <body>
 
-    <header>
-        <h1>KD</h1>
-        <p>Connect • Share • Discover</p>
-    </header>
+    <h1>KD</h1>
+    <div class="tagline">Connect • Share • Discover</div>
 
-    <main>
+    <button onclick="startKD()">START KD</button>
 
-        <div class="welcome-card">
-            <h2>Welcome to KD</h2>
+    <div id="home">
+
+        <div class="card">
+            <h2>Welcome to KD 🎉</h2>
             <p>Your social world starts here.</p>
+        </div>
 
-            <button onclick="document.getElementById('home').style.display='block'; this.style.display='none';">
-                Start KD
+        <div class="card">
+            <h2>My First Post</h2>
+            <p>Welcome to my KD Social App!</p>
+            <button onclick="alert('You liked this post! ❤️')">
+                ❤️ Like
             </button>
         </div>
 
-        <div id="home" style="display:none;">
-
-            <div class="post-card">
-                <h3>My First Post</h3>
-                <p>Welcome to my KD social app! 🎉</p>
-                <button onclick="alert('You liked this post! ❤️')">
-                    ❤️ Like
-                </button>
-            </div>
-
-            <div class="post-card">
-                <h3>KD Community</h3>
-                <p>Connect with friends and share your moments.</p>
-                <button onclick="alert('Coming soon!')">
-                    Explore KD
-                </button>
-            </div>
-
+        <div class="card">
+            <h2>KD Community</h2>
+            <p>Connect with friends and share your moments.</p>
         </div>
 
-    </main>
+    </div>
+
+    <script>
+        function startKD() {
+            document.getElementById("home").style.display = "block";
+        }
+    </script>
 
 </body>
 </html>
