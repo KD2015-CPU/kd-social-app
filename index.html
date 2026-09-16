@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KD Creator Studio</title>
+    <title>KD Safety Center</title>
 
     <style>
         * {
@@ -19,7 +19,7 @@
 
         header {
             background: white;
-            padding: 18px;
+            padding: 20px;
             text-align: center;
             border-bottom: 1px solid #ddd;
         }
@@ -30,106 +30,68 @@
         }
 
         .container {
-            max-width: 850px;
+            max-width: 650px;
             margin: 25px auto;
             padding: 15px;
         }
 
-        .welcome {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .stat {
-            background: white;
-            padding: 20px 10px;
-            text-align: center;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-
-        .stat strong {
-            display: block;
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-
-        .stat span {
-            color: #666;
-            font-size: 13px;
-        }
-
         .card {
             background: white;
-            padding: 20px;
-            border-radius: 15px;
+            padding: 22px;
             margin-bottom: 20px;
+            border-radius: 15px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        .actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        button {
-            padding: 13px;
-            border: none;
-            border-radius: 9px;
-            cursor: pointer;
-            font-size: 15px;
-        }
-
-        .primary {
-            background: #222;
-            color: white;
-        }
-
-        .item {
-            padding: 15px 0;
+        .safety-item {
+            padding: 16px 0;
             border-bottom: 1px solid #eee;
         }
 
-        .item:last-child {
+        .safety-item:last-child {
             border-bottom: none;
         }
 
-        .item strong {
-            display: block;
-            margin-bottom: 5px;
+        .safety-item h3 {
+            margin: 0 0 7px;
         }
 
-        .item span {
+        .safety-item p {
             color: #666;
-            font-size: 14px;
+            line-height: 1.5;
         }
 
-        #message {
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 9px;
+            background: #222;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .light-button {
+            background: #eeeeee;
+            color: #222;
+        }
+
+        textarea,
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 9px;
+            font-size: 16px;
+        }
+
+        #result {
             margin-top: 15px;
             text-align: center;
             font-weight: bold;
-        }
-
-        @media (max-width: 600px) {
-            .stats {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .actions {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
@@ -137,109 +99,127 @@
 <body>
 
 <header>
-    <h1>KD Creator Studio</h1>
-    <p>Create • Manage • Analyze</p>
+    <h1>KD 🛡️</h1>
+    <p>Safety Center</p>
 </header>
 
 <div class="container">
 
-    <div class="welcome">
-        <h2>Welcome, KD Creator 🎬</h2>
-        <p>Manage your KD content from one place.</p>
+    <div class="card">
+        <h2>Stay Safe on KD</h2>
+        <p>
+            Use these tools to control your experience and report
+            content or accounts that may violate KD rules.
+        </p>
     </div>
 
-    <div class="stats">
+    <div class="card">
 
-        <div class="stat">
-            <strong id="views">1,250</strong>
-            <span>Views</span>
+        <div class="safety-item">
+            <h3>🚫 Block a User</h3>
+            <p>Choose a user you do not want to interact with.</p>
+
+            <input
+                id="blockUser"
+                type="text"
+                placeholder="Username"
+            >
+
+            <button onclick="blockUser()">
+                Block User
+            </button>
         </div>
 
-        <div class="stat">
-            <strong id="likes">320</strong>
-            <span>Likes</span>
+        <div class="safety-item">
+            <h3>⚠️ Report Content</h3>
+            <p>
+                Report content that may violate KD community rules.
+            </p>
+
+            <textarea
+                id="reportReason"
+                placeholder="Tell us what you want to report..."
+            ></textarea>
+
+            <button onclick="reportContent()">
+                Submit Report
+            </button>
         </div>
 
-        <div class="stat">
-            <strong id="followers">85</strong>
-            <span>Followers</span>
-        </div>
+        <div class="safety-item">
+            <h3>🔒 Privacy</h3>
+            <p>
+                Review your privacy and interaction settings.
+            </p>
 
-        <div class="stat">
-            <strong id="posts">12</strong>
-            <span>Posts</span>
+            <button
+                class="light-button"
+                onclick="privacySettings()"
+            >
+                Open Privacy Settings
+            </button>
         </div>
 
     </div>
 
     <div class="card">
-        <h2>⚡ Quick Actions</h2>
+        <h2>📜 KD Community Rules</h2>
 
-        <div class="actions">
-
-            <button class="primary" onclick="uploadVideo()">
-                🎥 Upload Video
-            </button>
-
-            <button onclick="createPost()">
-                ➕ Create Post
-            </button>
-
-            <button onclick="viewAnalytics()">
-                📊 View Analytics
-            </button>
-
-            <button onclick="manageContent()">
-                🗂️ Manage Content
-            </button>
-
-        </div>
-
-        <div id="message"></div>
+        <p>• Be respectful to other users.</p>
+        <p>• Do not post illegal or harmful content.</p>
+        <p>• Do not harass or threaten other users.</p>
+        <p>• Protect your personal information.</p>
+        <p>• Report suspicious or abusive behavior.</p>
     </div>
 
-    <div class="card">
-        <h2>📹 Recent Content</h2>
-
-        <div class="item">
-            <strong>My First KD Short</strong>
-            <span>1,000 views • 250 likes</span>
-        </div>
-
-        <div class="item">
-            <strong>Welcome to KD</strong>
-            <span>200 views • 50 likes</span>
-        </div>
-
-        <div class="item">
-            <strong>My New Video</strong>
-            <span>50 views • 20 likes</span>
-        </div>
-
-    </div>
+    <div id="result"></div>
 
 </div>
 
 <script>
 
-function showMessage(text) {
-    document.getElementById("message").textContent = text;
+function blockUser() {
+
+    const username =
+        document.getElementById("blockUser").value.trim();
+
+    const result =
+        document.getElementById("result");
+
+    if (username === "") {
+        result.textContent =
+            "Please enter a username.";
+        return;
+    }
+
+    result.textContent =
+        "Demo: " + username + " has been blocked.";
 }
 
-function uploadVideo() {
-    showMessage("Video upload system will be connected to KD Storage later.");
+function reportContent() {
+
+    const reason =
+        document.getElementById("reportReason").value.trim();
+
+    const result =
+        document.getElementById("result");
+
+    if (reason === "") {
+        result.textContent =
+            "Please describe the problem.";
+        return;
+    }
+
+    result.textContent =
+        "Demo report submitted successfully.";
+    
+    document.getElementById("reportReason").value = "";
 }
 
-function createPost() {
-    showMessage("Post creator opened.");
-}
+function privacySettings() {
 
-function viewAnalytics() {
-    showMessage("Detailed KD analytics will be connected later.");
-}
-
-function manageContent() {
-    showMessage("Content management will be added here.");
+    document.getElementById("result").textContent =
+        "Privacy Settings will be connected to the KD account system later.";
 }
 
 </script>
