@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KD - Login</title>
+    <title>KD Media Upload</title>
 
     <style>
         * {
@@ -14,18 +14,19 @@
             margin: 0;
             font-family: Arial, sans-serif;
             background: #f1f3f6;
+            color: #222;
         }
 
         header {
             background: white;
-            padding: 20px;
+            padding: 18px;
             text-align: center;
             border-bottom: 1px solid #ddd;
         }
 
         header h1 {
             margin: 0;
-            font-size: 42px;
+            font-size: 38px;
         }
 
         header p {
@@ -34,71 +35,104 @@
         }
 
         .container {
-            max-width: 430px;
-            margin: 35px auto;
+            max-width: 650px;
+            margin: 25px auto;
             padding: 15px;
         }
 
         .card {
             background: white;
-            padding: 25px;
-            border-radius: 16px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
 
-        h2 {
-            text-align: center;
-            margin-top: 0;
-        }
-
-        input {
+        textarea {
             width: 100%;
-            padding: 13px;
-            margin: 8px 0;
+            min-height: 110px;
+            padding: 12px;
             border: 1px solid #ccc;
-            border-radius: 9px;
+            border-radius: 10px;
             font-size: 16px;
+            resize: vertical;
         }
 
-        button {
-            width: 100%;
-            padding: 13px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 9px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .login {
-            background: #222;
-            color: white;
-        }
-
-        .signup {
-            background: #eeeeee;
-        }
-
-        .switch {
+        .upload-label {
+            display: block;
+            margin-top: 15px;
+            padding: 14px;
             text-align: center;
-            margin-top: 18px;
-            color: #555;
-        }
-
-        .switch span {
-            font-weight: bold;
+            background: #eeeeee;
+            border-radius: 10px;
             cursor: pointer;
         }
 
-        #signupForm {
+        #mediaInput {
             display: none;
         }
 
-        #message {
+        .button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #222;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .preview {
+            margin-top: 15px;
             text-align: center;
-            margin-top: 16px;
+        }
+
+        .preview img,
+        .preview video {
+            width: 100%;
+            max-height: 450px;
+            object-fit: contain;
+            border-radius: 12px;
+            background: #000;
+        }
+
+        .remove-button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 8px;
+            background: #eeeeee;
+            cursor: pointer;
+        }
+
+        .post {
+            margin-top: 15px;
+            padding: 16px;
+            border-radius: 12px;
+            background: #f8f8f8;
+        }
+
+        .post-user {
             font-weight: bold;
-            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .post img,
+        .post video {
+            width: 100%;
+            max-height: 450px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin-top: 12px;
+            background: #000;
+        }
+
+        .empty {
+            text-align: center;
+            color: #777;
         }
     </style>
 </head>
@@ -107,145 +141,147 @@
 
 <header>
     <h1>KD</h1>
-    <p>Connect • Share • Discover</p>
+    <p>Photo & Video Upload</p>
 </header>
 
 <div class="container">
 
-    <!-- LOGIN -->
-    <div class="card" id="loginForm">
+    <div class="card">
+        <h2>➕ Create Media Post</h2>
 
-        <h2>Welcome Back</h2>
+        <textarea
+            id="postText"
+            placeholder="What's on your mind?"
+        ></textarea>
+
+        <label class="upload-label" for="mediaInput">
+            📷 Choose Photo or Video
+        </label>
 
         <input
-            type="email"
-            id="loginEmail"
-            placeholder="Email"
+            id="mediaInput"
+            type="file"
+            accept="image/*,video/*"
+            onchange="previewMedia(event)"
         >
 
-        <input
-            type="password"
-            id="loginPassword"
-            placeholder="Password"
-        >
+        <div id="preview" class="preview"></div>
 
-        <button class="login" onclick="login()">
-            Login
+        <button class="button" onclick="publishPost()">
+            Publish Post
         </button>
-
-        <div class="switch">
-            Don't have an account?
-            <span onclick="showSignup()">Create Account</span>
-        </div>
-
     </div>
 
-    <!-- SIGN UP -->
-    <div class="card" id="signupForm">
+    <div class="card">
+        <h2>📰 KD Feed</h2>
 
-        <h2>Create Your KD Account</h2>
-
-        <input
-            type="text"
-            id="signupName"
-            placeholder="Full Name"
-        >
-
-        <input
-            type="email"
-            id="signupEmail"
-            placeholder="Email"
-        >
-
-        <input
-            type="password"
-            id="signupPassword"
-            placeholder="Create Password"
-        >
-
-        <input
-            type="password"
-            id="signupConfirm"
-            placeholder="Confirm Password"
-        >
-
-        <button class="login" onclick="createAccount()">
-            Create Account
-        </button>
-
-        <div class="switch">
-            Already have an account?
-            <span onclick="showLogin()">Login</span>
+        <div id="feed">
+            <p class="empty">No posts yet.</p>
         </div>
-
     </div>
-
-    <div id="message"></div>
 
 </div>
 
 <script>
+    let selectedFile = null;
 
-function showSignup() {
-    document.getElementById("loginForm").style.display = "none";
-    document.getElementById("signupForm").style.display = "block";
-    document.getElementById("message").textContent = "";
-}
+    function previewMedia(event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById("preview");
 
-function showLogin() {
-    document.getElementById("signupForm").style.display = "none";
-    document.getElementById("loginForm").style.display = "block";
-    document.getElementById("message").textContent = "";
-}
+        preview.innerHTML = "";
+        selectedFile = null;
 
-function login() {
+        if (!file) {
+            return;
+        }
 
-    const email = document.getElementById("loginEmail").value.trim();
-    const password = document.getElementById("loginPassword").value;
+        selectedFile = file;
 
-    const message = document.getElementById("message");
+        const url = URL.createObjectURL(file);
 
-    if (email === "" || password === "") {
-        message.textContent = "Please enter your email and password.";
-        return;
+        if (file.type.startsWith("image/")) {
+            const image = document.createElement("img");
+            image.src = url;
+            image.alt = "Selected photo";
+            preview.appendChild(image);
+        } else if (file.type.startsWith("video/")) {
+            const video = document.createElement("video");
+            video.src = url;
+            video.controls = true;
+            preview.appendChild(video);
+        }
+
+        const removeButton = document.createElement("button");
+        removeButton.className = "remove-button";
+        removeButton.textContent = "Remove Media";
+        removeButton.onclick = removeMedia;
+
+        preview.appendChild(removeButton);
     }
 
-    message.textContent = "Demo login successful! Welcome to KD 🎉";
-}
+    function removeMedia() {
+        selectedFile = null;
 
-function createAccount() {
-
-    const name = document.getElementById("signupName").value.trim();
-    const email = document.getElementById("signupEmail").value.trim();
-    const password = document.getElementById("signupPassword").value;
-    const confirm = document.getElementById("signupConfirm").value;
-
-    const message = document.getElementById("message");
-
-    if (name === "" || email === "" || password === "" || confirm === "") {
-        message.textContent = "Please complete all fields.";
-        return;
+        document.getElementById("mediaInput").value = "";
+        document.getElementById("preview").innerHTML = "";
     }
 
-    if (password !== confirm) {
-        message.textContent = "Passwords do not match.";
-        return;
+    function publishPost() {
+        const text = document.getElementById("postText").value.trim();
+        const feed = document.getElementById("feed");
+
+        if (text === "" && !selectedFile) {
+            alert("Please write something or choose a photo/video.");
+            return;
+        }
+
+        const empty = feed.querySelector(".empty");
+
+        if (empty) {
+            empty.remove();
+        }
+
+        const post = document.createElement("div");
+        post.className = "post";
+
+        const username = document.createElement("div");
+        username.className = "post-user";
+        username.textContent = "KD User";
+
+        post.appendChild(username);
+
+        if (text !== "") {
+            const postText = document.createElement("p");
+            postText.textContent = text;
+            post.appendChild(postText);
+        }
+
+        if (selectedFile) {
+            const url = URL.createObjectURL(selectedFile);
+
+            if (selectedFile.type.startsWith("image/")) {
+                const image = document.createElement("img");
+                image.src = url;
+                image.alt = "KD post photo";
+                post.appendChild(image);
+            }
+
+            if (selectedFile.type.startsWith("video/")) {
+                const video = document.createElement("video");
+                video.src = url;
+                video.controls = true;
+                post.appendChild(video);
+            }
+        }
+
+        feed.prepend(post);
+
+        document.getElementById("postText").value = "";
+        removeMedia();
+
+        alert("Post published successfully! 🎉");
     }
-
-    if (password.length < 6) {
-        message.textContent = "Password must contain at least 6 characters.";
-        return;
-    }
-
-    message.textContent =
-        "Demo account created successfully! 🎉";
-
-    document.getElementById("signupName").value = "";
-    document.getElementById("signupEmail").value = "";
-    document.getElementById("signupPassword").value = "";
-    document.getElementById("signupConfirm").value = "";
-}
-
 </script>
 
 </body>
