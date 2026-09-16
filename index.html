@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>KD Social App - Media Post</title>
+    <title>KD Stories</title>
 
     <style>
         body {
@@ -15,23 +14,22 @@
 
         header {
             background: white;
-            padding: 15px;
+            padding: 18px;
             text-align: center;
             border-bottom: 1px solid #ddd;
             position: sticky;
             top: 0;
-            z-index: 10;
         }
 
         header h1 {
             margin: 0;
-            font-size: 34px;
+            font-size: 36px;
         }
 
         .container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 10px;
+            max-width: 650px;
+            margin: 25px auto;
+            padding: 15px;
         }
 
         .card {
@@ -42,45 +40,68 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        textarea {
-            width: 100%;
-            min-height: 100px;
-            padding: 12px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            font-size: 16px;
-            resize: vertical;
+        .stories {
+            display: flex;
+            gap: 14px;
+            overflow-x: auto;
+            padding: 10px 0;
         }
 
-        .file-label {
-            display: block;
-            margin-top: 15px;
-            padding: 14px;
+        .story {
+            min-width: 85px;
             text-align: center;
+            cursor: pointer;
+        }
+
+        .story-circle {
+            width: 70px;
+            height: 70px;
+            margin: auto;
+            border-radius: 50%;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            overflow: hidden;
+        }
+
+        .story-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .story-name {
+            margin-top: 7px;
+            font-size: 13px;
+        }
+
+        .upload-label {
+            display: block;
+            padding: 14px;
             background: #eeeeee;
+            text-align: center;
             border-radius: 10px;
             cursor: pointer;
         }
 
-        #mediaInput {
+        #storyInput {
             display: none;
         }
 
         #preview {
             margin-top: 15px;
+            text-align: center;
         }
 
-        #preview img,
-        #preview video {
-            width: 100%;
+        #preview img {
+            max-width: 100%;
             max-height: 400px;
-            object-fit: contain;
             border-radius: 12px;
-            background: #000;
         }
 
-        .publish-btn {
+        button {
             width: 100%;
             padding: 13px;
             margin-top: 15px;
@@ -92,26 +113,15 @@
             cursor: pointer;
         }
 
-        .post {
-            background: #f8f8f8;
-            padding: 18px;
+        #viewer {
+            display: none;
+            text-align: center;
+        }
+
+        #viewer img {
+            max-width: 100%;
+            max-height: 500px;
             border-radius: 12px;
-            margin-top: 15px;
-        }
-
-        .post-user {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .post img,
-        .post video {
-            width: 100%;
-            margin-top: 12px;
-            border-radius: 10px;
-            max-height: 450px;
-            object-fit: contain;
-            background: #000;
         }
     </style>
 </head>
@@ -120,134 +130,106 @@
 
 <header>
     <h1>KD</h1>
-    <p>Share your moments</p>
+    <p>Stories</p>
 </header>
 
 <div class="container">
 
     <div class="card">
-        <h2>Create Post</h2>
+        <h2>KD Stories</h2>
 
-        <textarea id="postText" placeholder="What's on your mind?"></textarea>
+        <div class="stories">
 
-        <label class="file-label" for="mediaInput">
-            📷 Choose Photo or Video
+            <div class="story" onclick="openStory()">
+                <div class="story-circle" id="myStoryCircle">
+                    ➕
+                </div>
+                <div class="story-name">Your Story</div>
+            </div>
+
+            <div class="story">
+                <div class="story-circle">👤</div>
+                <div class="story-name">KD User</div>
+            </div>
+
+            <div class="story">
+                <div class="story-circle">👤</div>
+                <div class="story-name">Creator</div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Add Your Story</h2>
+
+        <label class="upload-label" for="storyInput">
+            📷 Choose Photo
         </label>
 
         <input
-            id="mediaInput"
+            id="storyInput"
             type="file"
-            accept="image/*,video/*"
-            onchange="previewMedia(event)"
+            accept="image/*"
+            onchange="previewStory(event)"
         >
 
         <div id="preview"></div>
 
-        <button class="publish-btn" onclick="publishPost()">
-            Publish Post
+        <button onclick="publishStory()">
+            Publish Story
         </button>
     </div>
 
-    <div class="card">
-        <h2>KD Feed</h2>
-        <div id="feed">
-            <p>No posts yet.</p>
-        </div>
+    <div class="card" id="viewer">
+        <h2>Your Story</h2>
+        <img id="storyImage" src="" alt="Your KD Story">
     </div>
 
 </div>
 
 <script>
-let selectedFile = null;
-let previewURL = null;
+let selectedStory = null;
 
-function previewMedia(event) {
+function previewStory(event) {
     const file = event.target.files[0];
-    const preview = document.getElementById("preview");
-
-    preview.innerHTML = "";
-    selectedFile = file;
 
     if (!file) {
         return;
     }
 
-    if (previewURL) {
-        URL.revokeObjectURL(previewURL);
-    }
+    selectedStory = file;
 
-    previewURL = URL.createObjectURL(file);
+    const url = URL.createObjectURL(file);
 
-    if (file.type.startsWith("image/")) {
-        const img = document.createElement("img");
-        img.src = previewURL;
-        img.alt = "Selected photo";
-        preview.appendChild(img);
-    } else if (file.type.startsWith("video/")) {
-        const video = document.createElement("video");
-        video.src = previewURL;
-        video.controls = true;
-        preview.appendChild(video);
-    } else {
-        preview.textContent = "Unsupported file type.";
-    }
+    document.getElementById("preview").innerHTML =
+        '<img src="' + url + '" alt="Story preview">';
 }
 
-function publishPost() {
-    const text = document.getElementById("postText").value.trim();
-    const feed = document.getElementById("feed");
-
-    if (text === "" && !selectedFile) {
-        alert("Please write something or choose a photo/video.");
+function publishStory() {
+    if (!selectedStory) {
+        alert("Please choose a photo first.");
         return;
     }
 
-    const emptyMessage = feed.querySelector("p");
-    if (emptyMessage && emptyMessage.textContent === "No posts yet.") {
-        emptyMessage.remove();
+    const url = URL.createObjectURL(selectedStory);
+
+    document.getElementById("myStoryCircle").innerHTML =
+        '<img src="' + url + '" alt="My Story">';
+
+    document.getElementById("storyImage").src = url;
+    document.getElementById("viewer").style.display = "block";
+
+    alert("Your KD Story has been added!");
+}
+
+function openStory() {
+    if (!selectedStory) {
+        alert("Add a story first.");
+        return;
     }
 
-    const post = document.createElement("div");
-    post.className = "post";
-
-    const user = document.createElement("div");
-    user.className = "post-user";
-    user.textContent = "KD User";
-    post.appendChild(user);
-
-    if (text !== "") {
-        const textElement = document.createElement("p");
-        textElement.textContent = text;
-        post.appendChild(textElement);
-    }
-
-    if (selectedFile) {
-        const mediaURL = URL.createObjectURL(selectedFile);
-
-        if (selectedFile.type.startsWith("image/")) {
-            const img = document.createElement("img");
-            img.src = mediaURL;
-            img.alt = "KD post photo";
-            post.appendChild(img);
-        } else if (selectedFile.type.startsWith("video/")) {
-            const video = document.createElement("video");
-            video.src = mediaURL;
-            video.controls = true;
-            post.appendChild(video);
-        }
-    }
-
-    feed.prepend(post);
-
-    document.getElementById("postText").value = "";
-    document.getElementById("mediaInput").value = "";
-    document.getElementById("preview").innerHTML = "";
-    selectedFile = null;
-
-    if (previewURL) {
-        URL.revokeObjectURL(previewURL);
-        previewURL = null;
-    }
+    document.getElementById("viewer").style.display = "block";
 }
 </script>
 
