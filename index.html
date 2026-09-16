@@ -3,31 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KD Settings</title>
+    <title>KD Social App</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             background: #f1f3f6;
+            color: #222;
+            padding-bottom: 75px;
         }
 
         header {
             background: white;
-            padding: 18px;
+            padding: 16px;
             text-align: center;
             border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         header h1 {
             margin: 0;
-            font-size: 36px;
+            font-size: 34px;
         }
 
-        .container {
+        .page {
             max-width: 650px;
-            margin: 25px auto;
+            margin: 20px auto;
             padding: 15px;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
         }
 
         .card {
@@ -38,67 +55,90 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        .setting {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .setting:last-child {
-            border-bottom: none;
-        }
-
-        .setting-text strong {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .setting-text span {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .switch {
-            width: 52px;
-            height: 28px;
-            background: #ccc;
-            border-radius: 20px;
-            position: relative;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-
-        .switch::after {
-            content: "";
-            width: 22px;
-            height: 22px;
-            background: white;
-            border-radius: 50%;
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            transition: 0.2s;
-        }
-
-        .switch.active {
-            background: #222;
-        }
-
-        .switch.active::after {
-            left: 27px;
-        }
-
-        .danger {
+        textarea,
+        input {
             width: 100%;
-            padding: 13px;
-            margin-top: 10px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
             border: none;
             border-radius: 9px;
-            background: #eeeeee;
-            font-size: 16px;
+            padding: 11px 14px;
             cursor: pointer;
+            font-size: 15px;
+        }
+
+        .primary {
+            background: #222;
+            color: white;
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        .post {
+            background: #f8f8f8;
+            padding: 16px;
+            border-radius: 10px;
+            margin-top: 12px;
+        }
+
+        .nav {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 4px;
+            z-index: 20;
+        }
+
+        .nav button {
+            background: transparent;
+            font-size: 12px;
+            min-width: 55px;
+        }
+
+        .nav button.active {
+            font-weight: bold;
+        }
+
+        .profile-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 12px;
+        }
+
+        .profile-center {
+            text-align: center;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 18px;
+        }
+
+        .stats strong {
+            display: block;
+            font-size: 20px;
         }
     </style>
 </head>
@@ -107,77 +147,322 @@
 
 <header>
     <h1>KD</h1>
-    <p>Settings & Privacy</p>
+    <div id="pageTitle">Home</div>
 </header>
 
-<div class="container">
+<div class="page">
 
-    <div class="card">
-        <h2>🔐 Privacy</h2>
+    <!-- HOME -->
+    <section id="home" class="section active">
 
-        <div class="setting">
-            <div class="setting-text">
-                <strong>Private Account</strong>
-                <span>Only approved people can follow you.</span>
-            </div>
-            <div class="switch" onclick="toggleSetting(this)"></div>
+        <div class="card">
+            <h2>Welcome to KD 🎉</h2>
+            <p>Connect • Share • Discover</p>
         </div>
 
-        <div class="setting">
-            <div class="setting-text">
-                <strong>Show Online Status</strong>
-                <span>Let others see when you are online.</span>
+        <div class="card">
+            <h2>KD Feed</h2>
+
+            <div class="post">
+                <strong>KD User</strong>
+                <p>Welcome to the KD Social App!</p>
+                <button onclick="likePost(this)">❤️ Like</button>
             </div>
-            <div class="switch active" onclick="toggleSetting(this)"></div>
+
+            <div class="post">
+                <strong>KD Creator</strong>
+                <p>More exciting features are coming to KD.</p>
+                <button onclick="likePost(this)">❤️ Like</button>
+            </div>
         </div>
 
-        <div class="setting">
-            <div class="setting-text">
-                <strong>Allow Messages</strong>
-                <span>Allow other users to send you messages.</span>
-            </div>
-            <div class="switch active" onclick="toggleSetting(this)"></div>
+    </section>
+
+    <!-- SEARCH -->
+    <section id="search" class="section">
+
+        <div class="card">
+            <h2>🔍 Search KD</h2>
+
+            <input
+                id="searchInput"
+                type="text"
+                placeholder="Search people, posts, groups..."
+            >
+
+            <button class="primary" onclick="searchKD()">
+                Search
+            </button>
+
+            <div id="searchResults"></div>
         </div>
-    </div>
 
-    <div class="card">
-        <h2>🔔 Notifications</h2>
+    </section>
 
-        <div class="setting">
-            <div class="setting-text">
-                <strong>Push Notifications</strong>
-                <span>Receive notifications from KD.</span>
-            </div>
-            <div class="switch active" onclick="toggleSetting(this)"></div>
+    <!-- CREATE -->
+    <section id="create" class="section">
+
+        <div class="card">
+            <h2>➕ Create Post</h2>
+
+            <textarea
+                id="postInput"
+                placeholder="What's on your mind?"
+            ></textarea>
+
+            <button class="primary" onclick="createPost()">
+                Publish Post
+            </button>
         </div>
-    </div>
 
-    <div class="card">
-        <h2>🛡️ Safety</h2>
+    </section>
 
-        <button class="danger" onclick="reportHelp()">
-            Report a Problem
-        </button>
+    <!-- NOTIFICATIONS -->
+    <section id="notifications" class="section">
 
-        <button class="danger" onclick="blockedUsers()">
-            Blocked Users
-        </button>
-    </div>
+        <div class="card">
+            <h2>🔔 Notifications</h2>
+
+            <div class="post">
+                ❤️ KD User liked your post.
+            </div>
+
+            <div class="post">
+                💬 KD Creator commented on your post.
+            </div>
+
+            <div class="post">
+                👤 Someone started following you.
+            </div>
+        </div>
+
+    </section>
+
+    <!-- MESSAGES -->
+    <section id="messages" class="section">
+
+        <div class="card">
+            <h2>💬 Messages</h2>
+
+            <div id="chatBox" class="post">
+                <strong>KD User:</strong>
+                Hello! Welcome to KD 👋
+            </div>
+
+            <input
+                id="messageInput"
+                type="text"
+                placeholder="Write a message..."
+                style="margin-top:12px;"
+            >
+
+            <button class="primary" onclick="sendMessage()">
+                Send Message
+            </button>
+        </div>
+
+    </section>
+
+    <!-- PROFILE -->
+    <section id="profile" class="section">
+
+        <div class="card profile-center">
+
+            <div class="profile-avatar">
+                👤
+            </div>
+
+            <h2>KD User</h2>
+
+            <p>Welcome to my KD profile!</p>
+
+            <div class="stats">
+                <div>
+                    <strong>0</strong>
+                    Posts
+                </div>
+
+                <div>
+                    <strong>0</strong>
+                    Followers
+                </div>
+
+                <div>
+                    <strong>0</strong>
+                    Following
+                </div>
+            </div>
+
+        </div>
+
+    </section>
 
 </div>
 
+<!-- NAVIGATION -->
+<nav class="nav">
+
+    <button class="active" onclick="showSection('home', this)">
+        🏠<br>Home
+    </button>
+
+    <button onclick="showSection('search', this)">
+        🔍<br>Search
+    </button>
+
+    <button onclick="showSection('create', this)">
+        ➕<br>Create
+    </button>
+
+    <button onclick="showSection('notifications', this)">
+        🔔<br>Alerts
+    </button>
+
+    <button onclick="showSection('messages', this)">
+        💬<br>Chat
+    </button>
+
+    <button onclick="showSection('profile', this)">
+        👤<br>Profile
+    </button>
+
+</nav>
+
 <script>
-function toggleSetting(element) {
-    element.classList.toggle("active");
+
+function showSection(sectionId, button) {
+
+    const sections = document.querySelectorAll(".section");
+
+    sections.forEach(function(section) {
+        section.classList.remove("active");
+    });
+
+    document.getElementById(sectionId).classList.add("active");
+
+    const navButtons = document.querySelectorAll(".nav button");
+
+    navButtons.forEach(function(navButton) {
+        navButton.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    const titles = {
+        home: "Home",
+        search: "Search",
+        create: "Create Post",
+        notifications: "Notifications",
+        messages: "Messages",
+        profile: "Profile"
+    };
+
+    document.getElementById("pageTitle").textContent = titles[sectionId];
 }
 
-function reportHelp() {
-    alert("KD Help Center will be connected later.");
+function likePost(button) {
+
+    if (button.textContent === "❤️ Like") {
+        button.textContent = "❤️ Liked";
+    } else {
+        button.textContent = "❤️ Like";
+    }
 }
 
-function blockedUsers() {
-    alert("Blocked Users management will be added later.");
+function createPost() {
+
+    const input = document.getElementById("postInput");
+    const text = input.value.trim();
+
+    if (text === "") {
+        alert("Please write something first.");
+        return;
+    }
+
+    const post = document.createElement("div");
+    post.className = "post";
+
+    post.innerHTML =
+        "<strong>KD User</strong><p>" +
+        escapeHTML(text) +
+        "</p><button onclick='likePost(this)'>❤️ Like</button>";
+
+    document.getElementById("home").querySelector(".card:nth-child(2)").appendChild(post);
+
+    input.value = "";
+
+    alert("Post published!");
+    showSection("home", document.querySelector(".nav button"));
 }
+
+function searchKD() {
+
+    const query = document.getElementById("searchInput").value
+        .trim()
+        .toLowerCase();
+
+    const results = document.getElementById("searchResults");
+
+    if (query === "") {
+        results.innerHTML = "<p>Please enter a search.</p>";
+        return;
+    }
+
+    const data = [
+        "KD User",
+        "KD Creator",
+        "KD Community",
+        "KD Social App"
+    ];
+
+    const matches = data.filter(function(item) {
+        return item.toLowerCase().includes(query);
+    });
+
+    if (matches.length === 0) {
+        results.innerHTML = "<p>No results found.</p>";
+        return;
+    }
+
+    results.innerHTML = "";
+
+    matches.forEach(function(item) {
+
+        const result = document.createElement("div");
+        result.className = "post";
+        result.textContent = "🔎 " + item;
+
+        results.appendChild(result);
+    });
+}
+
+function sendMessage() {
+
+    const input = document.getElementById("messageInput");
+    const text = input.value.trim();
+
+    if (text === "") {
+        return;
+    }
+
+    const message = document.createElement("p");
+
+    message.innerHTML =
+        "<strong>You:</strong> " + escapeHTML(text);
+
+    document.getElementById("chatBox").appendChild(message);
+
+    input.value = "";
+}
+
+function escapeHTML(text) {
+
+    const div = document.createElement("div");
+    div.textContent = text;
+
+    return div.innerHTML;
+}
+
 </script>
 
 </body>
