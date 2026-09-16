@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KD Social App</title>
+    <title>KD - Login</title>
 
     <style>
         * {
@@ -14,131 +14,91 @@
             margin: 0;
             font-family: Arial, sans-serif;
             background: #f1f3f6;
-            color: #222;
-            padding-bottom: 75px;
         }
 
         header {
             background: white;
-            padding: 16px;
+            padding: 20px;
             text-align: center;
             border-bottom: 1px solid #ddd;
-            position: sticky;
-            top: 0;
-            z-index: 10;
         }
 
         header h1 {
             margin: 0;
-            font-size: 34px;
+            font-size: 42px;
         }
 
-        .page {
-            max-width: 650px;
-            margin: 20px auto;
+        header p {
+            margin: 6px 0 0;
+            color: #666;
+        }
+
+        .container {
+            max-width: 430px;
+            margin: 35px auto;
             padding: 15px;
-        }
-
-        .section {
-            display: none;
-        }
-
-        .section.active {
-            display: block;
         }
 
         .card {
             background: white;
-            padding: 20px;
-            margin-bottom: 18px;
-            border-radius: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
         }
 
-        textarea,
+        h2 {
+            text-align: center;
+            margin-top: 0;
+        }
+
         input {
             width: 100%;
-            padding: 12px;
+            padding: 13px;
+            margin: 8px 0;
             border: 1px solid #ccc;
-            border-radius: 10px;
+            border-radius: 9px;
             font-size: 16px;
         }
 
-        textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
         button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 10px;
             border: none;
             border-radius: 9px;
-            padding: 11px 14px;
+            font-size: 16px;
             cursor: pointer;
-            font-size: 15px;
         }
 
-        .primary {
+        .login {
             background: #222;
             color: white;
-            width: 100%;
-            margin-top: 12px;
         }
 
-        .post {
-            background: #f8f8f8;
-            padding: 16px;
-            border-radius: 10px;
-            margin-top: 12px;
+        .signup {
+            background: #eeeeee;
         }
 
-        .nav {
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: white;
-            border-top: 1px solid #ddd;
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 4px;
-            z-index: 20;
-        }
-
-        .nav button {
-            background: transparent;
-            font-size: 12px;
-            min-width: 55px;
-        }
-
-        .nav button.active {
-            font-weight: bold;
-        }
-
-        .profile-avatar {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            background: #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            margin: 0 auto 12px;
-        }
-
-        .profile-center {
+        .switch {
             text-align: center;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: space-around;
             margin-top: 18px;
+            color: #555;
         }
 
-        .stats strong {
-            display: block;
-            font-size: 20px;
+        .switch span {
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #signupForm {
+            display: none;
+        }
+
+        #message {
+            text-align: center;
+            margin-top: 16px;
+            font-weight: bold;
+            line-height: 1.4;
         }
     </style>
 </head>
@@ -147,320 +107,143 @@
 
 <header>
     <h1>KD</h1>
-    <div id="pageTitle">Home</div>
+    <p>Connect • Share • Discover</p>
 </header>
 
-<div class="page">
+<div class="container">
 
-    <!-- HOME -->
-    <section id="home" class="section active">
+    <!-- LOGIN -->
+    <div class="card" id="loginForm">
 
-        <div class="card">
-            <h2>Welcome to KD 🎉</h2>
-            <p>Connect • Share • Discover</p>
+        <h2>Welcome Back</h2>
+
+        <input
+            type="email"
+            id="loginEmail"
+            placeholder="Email"
+        >
+
+        <input
+            type="password"
+            id="loginPassword"
+            placeholder="Password"
+        >
+
+        <button class="login" onclick="login()">
+            Login
+        </button>
+
+        <div class="switch">
+            Don't have an account?
+            <span onclick="showSignup()">Create Account</span>
         </div>
 
-        <div class="card">
-            <h2>KD Feed</h2>
+    </div>
 
-            <div class="post">
-                <strong>KD User</strong>
-                <p>Welcome to the KD Social App!</p>
-                <button onclick="likePost(this)">❤️ Like</button>
-            </div>
+    <!-- SIGN UP -->
+    <div class="card" id="signupForm">
 
-            <div class="post">
-                <strong>KD Creator</strong>
-                <p>More exciting features are coming to KD.</p>
-                <button onclick="likePost(this)">❤️ Like</button>
-            </div>
+        <h2>Create Your KD Account</h2>
+
+        <input
+            type="text"
+            id="signupName"
+            placeholder="Full Name"
+        >
+
+        <input
+            type="email"
+            id="signupEmail"
+            placeholder="Email"
+        >
+
+        <input
+            type="password"
+            id="signupPassword"
+            placeholder="Create Password"
+        >
+
+        <input
+            type="password"
+            id="signupConfirm"
+            placeholder="Confirm Password"
+        >
+
+        <button class="login" onclick="createAccount()">
+            Create Account
+        </button>
+
+        <div class="switch">
+            Already have an account?
+            <span onclick="showLogin()">Login</span>
         </div>
 
-    </section>
+    </div>
 
-    <!-- SEARCH -->
-    <section id="search" class="section">
-
-        <div class="card">
-            <h2>🔍 Search KD</h2>
-
-            <input
-                id="searchInput"
-                type="text"
-                placeholder="Search people, posts, groups..."
-            >
-
-            <button class="primary" onclick="searchKD()">
-                Search
-            </button>
-
-            <div id="searchResults"></div>
-        </div>
-
-    </section>
-
-    <!-- CREATE -->
-    <section id="create" class="section">
-
-        <div class="card">
-            <h2>➕ Create Post</h2>
-
-            <textarea
-                id="postInput"
-                placeholder="What's on your mind?"
-            ></textarea>
-
-            <button class="primary" onclick="createPost()">
-                Publish Post
-            </button>
-        </div>
-
-    </section>
-
-    <!-- NOTIFICATIONS -->
-    <section id="notifications" class="section">
-
-        <div class="card">
-            <h2>🔔 Notifications</h2>
-
-            <div class="post">
-                ❤️ KD User liked your post.
-            </div>
-
-            <div class="post">
-                💬 KD Creator commented on your post.
-            </div>
-
-            <div class="post">
-                👤 Someone started following you.
-            </div>
-        </div>
-
-    </section>
-
-    <!-- MESSAGES -->
-    <section id="messages" class="section">
-
-        <div class="card">
-            <h2>💬 Messages</h2>
-
-            <div id="chatBox" class="post">
-                <strong>KD User:</strong>
-                Hello! Welcome to KD 👋
-            </div>
-
-            <input
-                id="messageInput"
-                type="text"
-                placeholder="Write a message..."
-                style="margin-top:12px;"
-            >
-
-            <button class="primary" onclick="sendMessage()">
-                Send Message
-            </button>
-        </div>
-
-    </section>
-
-    <!-- PROFILE -->
-    <section id="profile" class="section">
-
-        <div class="card profile-center">
-
-            <div class="profile-avatar">
-                👤
-            </div>
-
-            <h2>KD User</h2>
-
-            <p>Welcome to my KD profile!</p>
-
-            <div class="stats">
-                <div>
-                    <strong>0</strong>
-                    Posts
-                </div>
-
-                <div>
-                    <strong>0</strong>
-                    Followers
-                </div>
-
-                <div>
-                    <strong>0</strong>
-                    Following
-                </div>
-            </div>
-
-        </div>
-
-    </section>
+    <div id="message"></div>
 
 </div>
 
-<!-- NAVIGATION -->
-<nav class="nav">
-
-    <button class="active" onclick="showSection('home', this)">
-        🏠<br>Home
-    </button>
-
-    <button onclick="showSection('search', this)">
-        🔍<br>Search
-    </button>
-
-    <button onclick="showSection('create', this)">
-        ➕<br>Create
-    </button>
-
-    <button onclick="showSection('notifications', this)">
-        🔔<br>Alerts
-    </button>
-
-    <button onclick="showSection('messages', this)">
-        💬<br>Chat
-    </button>
-
-    <button onclick="showSection('profile', this)">
-        👤<br>Profile
-    </button>
-
-</nav>
-
 <script>
 
-function showSection(sectionId, button) {
-
-    const sections = document.querySelectorAll(".section");
-
-    sections.forEach(function(section) {
-        section.classList.remove("active");
-    });
-
-    document.getElementById(sectionId).classList.add("active");
-
-    const navButtons = document.querySelectorAll(".nav button");
-
-    navButtons.forEach(function(navButton) {
-        navButton.classList.remove("active");
-    });
-
-    button.classList.add("active");
-
-    const titles = {
-        home: "Home",
-        search: "Search",
-        create: "Create Post",
-        notifications: "Notifications",
-        messages: "Messages",
-        profile: "Profile"
-    };
-
-    document.getElementById("pageTitle").textContent = titles[sectionId];
+function showSignup() {
+    document.getElementById("loginForm").style.display = "none";
+    document.getElementById("signupForm").style.display = "block";
+    document.getElementById("message").textContent = "";
 }
 
-function likePost(button) {
-
-    if (button.textContent === "❤️ Like") {
-        button.textContent = "❤️ Liked";
-    } else {
-        button.textContent = "❤️ Like";
-    }
+function showLogin() {
+    document.getElementById("signupForm").style.display = "none";
+    document.getElementById("loginForm").style.display = "block";
+    document.getElementById("message").textContent = "";
 }
 
-function createPost() {
+function login() {
 
-    const input = document.getElementById("postInput");
-    const text = input.value.trim();
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
 
-    if (text === "") {
-        alert("Please write something first.");
+    const message = document.getElementById("message");
+
+    if (email === "" || password === "") {
+        message.textContent = "Please enter your email and password.";
         return;
     }
 
-    const post = document.createElement("div");
-    post.className = "post";
-
-    post.innerHTML =
-        "<strong>KD User</strong><p>" +
-        escapeHTML(text) +
-        "</p><button onclick='likePost(this)'>❤️ Like</button>";
-
-    document.getElementById("home").querySelector(".card:nth-child(2)").appendChild(post);
-
-    input.value = "";
-
-    alert("Post published!");
-    showSection("home", document.querySelector(".nav button"));
+    message.textContent = "Demo login successful! Welcome to KD 🎉";
 }
 
-function searchKD() {
+function createAccount() {
 
-    const query = document.getElementById("searchInput").value
-        .trim()
-        .toLowerCase();
+    const name = document.getElementById("signupName").value.trim();
+    const email = document.getElementById("signupEmail").value.trim();
+    const password = document.getElementById("signupPassword").value;
+    const confirm = document.getElementById("signupConfirm").value;
 
-    const results = document.getElementById("searchResults");
+    const message = document.getElementById("message");
 
-    if (query === "") {
-        results.innerHTML = "<p>Please enter a search.</p>";
+    if (name === "" || email === "" || password === "" || confirm === "") {
+        message.textContent = "Please complete all fields.";
         return;
     }
 
-    const data = [
-        "KD User",
-        "KD Creator",
-        "KD Community",
-        "KD Social App"
-    ];
-
-    const matches = data.filter(function(item) {
-        return item.toLowerCase().includes(query);
-    });
-
-    if (matches.length === 0) {
-        results.innerHTML = "<p>No results found.</p>";
+    if (password !== confirm) {
+        message.textContent = "Passwords do not match.";
         return;
     }
 
-    results.innerHTML = "";
-
-    matches.forEach(function(item) {
-
-        const result = document.createElement("div");
-        result.className = "post";
-        result.textContent = "🔎 " + item;
-
-        results.appendChild(result);
-    });
-}
-
-function sendMessage() {
-
-    const input = document.getElementById("messageInput");
-    const text = input.value.trim();
-
-    if (text === "") {
+    if (password.length < 6) {
+        message.textContent = "Password must contain at least 6 characters.";
         return;
     }
 
-    const message = document.createElement("p");
+    message.textContent =
+        "Demo account created successfully! 🎉";
 
-    message.innerHTML =
-        "<strong>You:</strong> " + escapeHTML(text);
-
-    document.getElementById("chatBox").appendChild(message);
-
-    input.value = "";
-}
-
-function escapeHTML(text) {
-
-    const div = document.createElement("div");
-    div.textContent = text;
-
-    return div.innerHTML;
+    document.getElementById("signupName").value = "";
+    document.getElementById("signupEmail").value = "";
+    document.getElementById("signupPassword").value = "";
+    document.getElementById("signupConfirm").value = "";
 }
 
 </script>
