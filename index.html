@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>KD Social App - Feed</title>
+    <title>KD Social App - Media Post</title>
 
     <style>
         body {
@@ -20,6 +20,7 @@
             border-bottom: 1px solid #ddd;
             position: sticky;
             top: 0;
+            z-index: 10;
         }
 
         header h1 {
@@ -33,69 +34,84 @@
             padding: 10px;
         }
 
-        .post {
+        .card {
             background: white;
-            margin-bottom: 20px;
-            padding: 18px;
+            padding: 20px;
             border-radius: 15px;
+            margin-bottom: 20px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        .user {
-            font-weight: bold;
-            font-size: 18px;
-            margin-bottom: 12px;
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+            resize: vertical;
         }
 
-        .post-text {
-            font-size: 17px;
-            line-height: 1.5;
-            margin-bottom: 15px;
-        }
-
-        .actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .actions button {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 8px;
-            background: #eeeeee;
-            cursor: pointer;
-            font-size: 15px;
-        }
-
-        .actions button:hover {
-            background: #dddddd;
-        }
-
-        .comments {
+        .file-label {
+            display: block;
             margin-top: 15px;
+            padding: 14px;
+            text-align: center;
+            background: #eeeeee;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #mediaInput {
             display: none;
         }
 
-        .comments input {
-            width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 8px;
+        #preview {
+            margin-top: 15px;
         }
 
-        .comments button {
-            margin-top: 8px;
-            padding: 10px;
+        #preview img,
+        #preview video {
+            width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 12px;
+            background: #000;
+        }
+
+        .publish-btn {
+            width: 100%;
+            padding: 13px;
+            margin-top: 15px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
+            background: #222;
+            color: white;
+            font-size: 16px;
             cursor: pointer;
         }
 
-        .comment-list {
-            margin-top: 10px;
-            font-size: 14px;
+        .post {
+            background: #f8f8f8;
+            padding: 18px;
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+
+        .post-user {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .post img,
+        .post video {
+            width: 100%;
+            margin-top: 12px;
+            border-radius: 10px;
+            max-height: 450px;
+            object-fit: contain;
+            background: #000;
         }
     </style>
 </head>
@@ -104,96 +120,134 @@
 
 <header>
     <h1>KD</h1>
-    <div>Home Feed</div>
+    <p>Share your moments</p>
 </header>
 
 <div class="container">
 
-    <div class="post">
-        <div class="user">KD User</div>
+    <div class="card">
+        <h2>Create Post</h2>
 
-        <div class="post-text">
-            Welcome to KD Social App! 🎉
-        </div>
+        <textarea id="postText" placeholder="What's on your mind?"></textarea>
 
-        <div class="actions">
-            <button onclick="likePost(this)">❤️ Like</button>
-            <button onclick="toggleComments(this)">💬 Comment</button>
-            <button onclick="sharePost()">↗️ Share</button>
-        </div>
+        <label class="file-label" for="mediaInput">
+            📷 Choose Photo or Video
+        </label>
 
-        <div class="comments">
-            <input type="text" placeholder="Write a comment...">
-            <button onclick="addComment(this)">Post Comment</button>
-            <div class="comment-list"></div>
-        </div>
+        <input
+            id="mediaInput"
+            type="file"
+            accept="image/*,video/*"
+            onchange="previewMedia(event)"
+        >
+
+        <div id="preview"></div>
+
+        <button class="publish-btn" onclick="publishPost()">
+            Publish Post
+        </button>
     </div>
 
-
-    <div class="post">
-        <div class="user">KD Creator</div>
-
-        <div class="post-text">
-            This is the second post on KD. 🚀
-        </div>
-
-        <div class="actions">
-            <button onclick="likePost(this)">❤️ Like</button>
-            <button onclick="toggleComments(this)">💬 Comment</button>
-            <button onclick="sharePost()">↗️ Share</button>
-        </div>
-
-        <div class="comments">
-            <input type="text" placeholder="Write a comment...">
-            <button onclick="addComment(this)">Post Comment</button>
-            <div class="comment-list"></div>
+    <div class="card">
+        <h2>KD Feed</h2>
+        <div id="feed">
+            <p>No posts yet.</p>
         </div>
     </div>
 
 </div>
 
 <script>
-function likePost(button) {
-    if (button.textContent === "❤️ Like") {
-        button.textContent = "❤️ Liked";
-    } else {
-        button.textContent = "❤️ Like";
-    }
-}
+let selectedFile = null;
+let previewURL = null;
 
-function toggleComments(button) {
-    const post = button.closest(".post");
-    const comments = post.querySelector(".comments");
+function previewMedia(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById("preview");
 
-    if (comments.style.display === "block") {
-        comments.style.display = "none";
-    } else {
-        comments.style.display = "block";
-    }
-}
+    preview.innerHTML = "";
+    selectedFile = file;
 
-function addComment(button) {
-    const comments = button.parentElement;
-    const input = comments.querySelector("input");
-    const list = comments.querySelector(".comment-list");
-
-    const text = input.value.trim();
-
-    if (text === "") {
-        alert("Please write a comment.");
+    if (!file) {
         return;
     }
 
-    const comment = document.createElement("p");
-    comment.textContent = "KD User: " + text;
+    if (previewURL) {
+        URL.revokeObjectURL(previewURL);
+    }
 
-    list.appendChild(comment);
+    previewURL = URL.createObjectURL(file);
 
-    input.value = "";
+    if (file.type.startsWith("image/")) {
+        const img = document.createElement("img");
+        img.src = previewURL;
+        img.alt = "Selected photo";
+        preview.appendChild(img);
+    } else if (file.type.startsWith("video/")) {
+        const video = document.createElement("video");
+        video.src = previewURL;
+        video.controls = true;
+        preview.appendChild(video);
+    } else {
+        preview.textContent = "Unsupported file type.";
+    }
 }
 
-function sharePost() {
-    alert("Share feature will be connected to real sharing later.");
+function publishPost() {
+    const text = document.getElementById("postText").value.trim();
+    const feed = document.getElementById("feed");
+
+    if (text === "" && !selectedFile) {
+        alert("Please write something or choose a photo/video.");
+        return;
+    }
+
+    const emptyMessage = feed.querySelector("p");
+    if (emptyMessage && emptyMessage.textContent === "No posts yet.") {
+        emptyMessage.remove();
+    }
+
+    const post = document.createElement("div");
+    post.className = "post";
+
+    const user = document.createElement("div");
+    user.className = "post-user";
+    user.textContent = "KD User";
+    post.appendChild(user);
+
+    if (text !== "") {
+        const textElement = document.createElement("p");
+        textElement.textContent = text;
+        post.appendChild(textElement);
+    }
+
+    if (selectedFile) {
+        const mediaURL = URL.createObjectURL(selectedFile);
+
+        if (selectedFile.type.startsWith("image/")) {
+            const img = document.createElement("img");
+            img.src = mediaURL;
+            img.alt = "KD post photo";
+            post.appendChild(img);
+        } else if (selectedFile.type.startsWith("video/")) {
+            const video = document.createElement("video");
+            video.src = mediaURL;
+            video.controls = true;
+            post.appendChild(video);
+        }
+    }
+
+    feed.prepend(post);
+
+    document.getElementById("postText").value = "";
+    document.getElementById("mediaInput").value = "";
+    document.getElementById("preview").innerHTML = "";
+    selectedFile = null;
+
+    if (previewURL) {
+        URL.revokeObjectURL(previewURL);
+        previewURL = null;
+    }
 }
 </script>
 
