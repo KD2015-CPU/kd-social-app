@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KD Chat</title>
+    <title>KD Notifications</title>
 
     <style>
         body {
@@ -24,82 +24,76 @@
             font-size: 36px;
         }
 
-        .chat-container {
+        .container {
             max-width: 650px;
-            margin: 20px auto;
+            margin: 25px auto;
             padding: 15px;
         }
 
-        .chat-card {
+        .card {
             background: white;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        .chat-header {
-            padding: 18px;
-            border-bottom: 1px solid #ddd;
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .messages {
-            height: 400px;
-            overflow-y: auto;
+        .title {
             padding: 20px;
-            background: #f8f8f8;
+            border-bottom: 1px solid #eee;
         }
 
-        .message {
-            max-width: 75%;
-            padding: 10px 14px;
-            margin-bottom: 12px;
-            border-radius: 14px;
-            line-height: 1.4;
-            word-wrap: break-word;
+        .notification {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 16px 20px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
         }
 
-        .received {
-            background: white;
-            margin-right: auto;
+        .notification:last-child {
+            border-bottom: none;
         }
 
-        .sent {
-            background: #222;
-            color: white;
-            margin-left: auto;
+        .icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #eeeeee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .notification-text {
+            flex: 1;
+        }
+
+        .notification-text strong {
+            display: block;
+            margin-bottom: 4px;
         }
 
         .time {
-            display: block;
-            font-size: 11px;
-            opacity: 0.7;
-            margin-top: 4px;
+            font-size: 12px;
+            color: #777;
         }
 
-        .input-area {
-            display: flex;
-            gap: 8px;
+        .unread {
+            background: #f7f7f7;
+        }
+
+        .clear-btn {
+            width: calc(100% - 30px);
+            margin: 15px;
             padding: 12px;
-            background: white;
-            border-top: 1px solid #ddd;
-        }
-
-        .input-area input {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            font-size: 16px;
-        }
-
-        .input-area button {
-            padding: 12px 18px;
             border: none;
-            border-radius: 10px;
+            border-radius: 9px;
             background: #222;
             color: white;
+            font-size: 16px;
             cursor: pointer;
         }
     </style>
@@ -109,77 +103,66 @@
 
 <header>
     <h1>KD</h1>
-    <p>Messages</p>
+    <p>Notifications</p>
 </header>
 
-<div class="chat-container">
+<div class="container">
 
-    <div class="chat-card">
+    <div class="card" id="notificationList">
 
-        <div class="chat-header">
-            💬 Chat with KD User
+        <div class="title">
+            <h2>🔔 Notifications</h2>
         </div>
 
-        <div class="messages" id="messages">
-
-            <div class="message received">
-                Hello! Welcome to KD 👋
-                <span class="time">Just now</span>
+        <div class="notification unread">
+            <div class="icon">❤️</div>
+            <div class="notification-text">
+                <strong>KD User liked your post</strong>
+                <span class="time">2 minutes ago</span>
             </div>
-
         </div>
 
-        <div class="input-area">
-
-            <input
-                type="text"
-                id="messageInput"
-                placeholder="Write a message..."
-                onkeydown="handleEnter(event)"
-            >
-
-            <button onclick="sendMessage()">
-                Send
-            </button>
-
+        <div class="notification unread">
+            <div class="icon">💬</div>
+            <div class="notification-text">
+                <strong>KD Creator commented on your post</strong>
+                <span class="time">10 minutes ago</span>
+            </div>
         </div>
+
+        <div class="notification">
+            <div class="icon">👤</div>
+            <div class="notification-text">
+                <strong>KD User started following you</strong>
+                <span class="time">1 hour ago</span>
+            </div>
+        </div>
+
+        <div class="notification">
+            <div class="icon">💬</div>
+            <div class="notification-text">
+                <strong>You received a new message</strong>
+                <span class="time">2 hours ago</span>
+            </div>
+        </div>
+
+        <button class="clear-btn" onclick="clearNotifications()">
+            Mark All as Read
+        </button>
 
     </div>
 
 </div>
 
 <script>
-function sendMessage() {
-    const input = document.getElementById("messageInput");
-    const messages = document.getElementById("messages");
+function clearNotifications() {
+    const notifications = document.querySelectorAll(".notification");
 
-    const text = input.value.trim();
+    notifications.forEach(function (notification) {
+        notification.classList.remove("unread");
+    });
 
-    if (text === "") {
-        return;
-    }
-
-    const message = document.createElement("div");
-    message.className = "message sent";
-
-    const messageText = document.createTextNode(text);
-    message.appendChild(messageText);
-
-    const time = document.createElement("span");
-    time.className = "time";
-    time.textContent = "Just now";
-
-    message.appendChild(time);
-    messages.appendChild(message);
-
-    input.value = "";
-    messages.scrollTop = messages.scrollHeight;
-}
-
-function handleEnter(event) {
-    if (event.key === "Enter") {
-        sendMessage();
-    }
+    alert("All notifications marked as read.");
 }
 </script>
 
