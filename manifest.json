@@ -1,0 +1,10 @@
+{
+  "name": "KD Social App",
+  "short_name": "KD",
+  "description": "KD Social App - Connect, Share, Discover",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1565c0",
+  "orientation": "portrait"
+}
