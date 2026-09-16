@@ -7,80 +7,108 @@
 
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #f2f4f8;
-            text-align: center;
             margin: 0;
-            padding: 30px 15px;
+            font-family: Arial, sans-serif;
+            background: #f1f3f6;
         }
 
-        h1 {
-            font-size: 42px;
-            margin-bottom: 5px;
+        header {
+            background: #ffffff;
+            padding: 18px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
         }
 
-        .tagline {
-            font-size: 18px;
-            margin-bottom: 30px;
+        header h1 {
+            margin: 0;
+            font-size: 36px;
         }
 
-        button {
-            padding: 14px 28px;
-            font-size: 18px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
+        header p {
+            margin: 5px 0 0;
+            color: #666;
         }
 
-        #home {
-            display: none;
-            margin-top: 30px;
+        .container {
+            max-width: 600px;
+            margin: 25px auto;
+            padding: 0 15px;
         }
 
         .card {
             background: white;
-            max-width: 500px;
-            margin: 20px auto;
             padding: 20px;
+            margin-bottom: 20px;
             border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .welcome {
+            text-align: center;
+        }
+
+        .menu {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .menu button {
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background: #eeeeee;
+        }
+
+        .post h3 {
+            margin-top: 0;
+        }
+
+        .post button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
         }
     </style>
 </head>
 
 <body>
 
+<header>
     <h1>KD</h1>
-    <div class="tagline">Connect • Share • Discover</div>
+    <p>Connect • Share • Discover</p>
+</header>
 
-    <button onclick="startKD()">START KD</button>
+<div class="container">
 
-    <div id="home">
-
-        <div class="card">
-            <h2>Welcome to KD 🎉</h2>
-            <p>Your social world starts here.</p>
-        </div>
-
-        <div class="card">
-            <h2>My First Post</h2>
-            <p>Welcome to my KD Social App!</p>
-            <button onclick="alert('You liked this post! ❤️')">
-                ❤️ Like
-            </button>
-        </div>
-
-        <div class="card">
-            <h2>KD Community</h2>
-            <p>Connect with friends and share your moments.</p>
-        </div>
-
+    <div class="card welcome">
+        <h2>Welcome to KD</h2>
+        <p>Your social world starts here.</p>
     </div>
 
-    <script>
-        function startKD() {
-            document.getElementById("home").style.display = "block";
-        }
-    </script>
+    <div class="card">
+        <h2>KD Menu</h2>
+
+        <div class="menu">
+            <button>🏠 Home</button>
+            <button>👤 Profile</button>
+            <button>➕ Create Post</button>
+            <button>🔍 Search</button>
+            <button>💬 Messages</button>
+            <button>🔔 Notifications</button>
+        </div>
+    </div>
+
+    <div class="card post">
+        <h3>My First KD Post</h3>
+        <p>Welcome to the KD Social App! 🎉</p>
+        <button onclick="alert('Liked! ❤️')">❤️ Like</button>
+    </div>
+
+</div>
 
 </body>
 </html>
