@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KD Media Upload</title>
+    <title>KD Creator Studio</title>
 
     <style>
         * {
@@ -26,113 +26,110 @@
 
         header h1 {
             margin: 0;
-            font-size: 38px;
-        }
-
-        header p {
-            margin: 6px 0 0;
-            color: #666;
+            font-size: 36px;
         }
 
         .container {
-            max-width: 650px;
+            max-width: 850px;
             margin: 25px auto;
             padding: 15px;
+        }
+
+        .welcome {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            background: white;
+            padding: 20px 10px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .stat span {
+            color: #666;
+            font-size: 13px;
         }
 
         .card {
             background: white;
             padding: 20px;
-            margin-bottom: 20px;
             border-radius: 15px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        textarea {
-            width: 100%;
-            min-height: 110px;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            font-size: 16px;
-            resize: vertical;
+        .actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
 
-        .upload-label {
-            display: block;
-            margin-top: 15px;
-            padding: 14px;
-            text-align: center;
-            background: #eeeeee;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-
-        #mediaInput {
-            display: none;
-        }
-
-        .button {
-            width: 100%;
+        button {
             padding: 13px;
-            margin-top: 15px;
             border: none;
-            border-radius: 10px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .primary {
             background: #222;
             color: white;
-            font-size: 16px;
-            cursor: pointer;
         }
 
-        .preview {
+        .item {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item:last-child {
+            border-bottom: none;
+        }
+
+        .item strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .item span {
+            color: #666;
+            font-size: 14px;
+        }
+
+        #message {
             margin-top: 15px;
             text-align: center;
-        }
-
-        .preview img,
-        .preview video {
-            width: 100%;
-            max-height: 450px;
-            object-fit: contain;
-            border-radius: 12px;
-            background: #000;
-        }
-
-        .remove-button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 8px;
-            background: #eeeeee;
-            cursor: pointer;
-        }
-
-        .post {
-            margin-top: 15px;
-            padding: 16px;
-            border-radius: 12px;
-            background: #f8f8f8;
-        }
-
-        .post-user {
             font-weight: bold;
-            margin-bottom: 10px;
         }
 
-        .post img,
-        .post video {
-            width: 100%;
-            max-height: 450px;
-            object-fit: contain;
-            border-radius: 10px;
-            margin-top: 12px;
-            background: #000;
-        }
+        @media (max-width: 600px) {
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
 
-        .empty {
-            text-align: center;
-            color: #777;
+            .actions {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -140,148 +137,111 @@
 <body>
 
 <header>
-    <h1>KD</h1>
-    <p>Photo & Video Upload</p>
+    <h1>KD Creator Studio</h1>
+    <p>Create • Manage • Analyze</p>
 </header>
 
 <div class="container">
 
-    <div class="card">
-        <h2>➕ Create Media Post</h2>
+    <div class="welcome">
+        <h2>Welcome, KD Creator 🎬</h2>
+        <p>Manage your KD content from one place.</p>
+    </div>
 
-        <textarea
-            id="postText"
-            placeholder="What's on your mind?"
-        ></textarea>
+    <div class="stats">
 
-        <label class="upload-label" for="mediaInput">
-            📷 Choose Photo or Video
-        </label>
+        <div class="stat">
+            <strong id="views">1,250</strong>
+            <span>Views</span>
+        </div>
 
-        <input
-            id="mediaInput"
-            type="file"
-            accept="image/*,video/*"
-            onchange="previewMedia(event)"
-        >
+        <div class="stat">
+            <strong id="likes">320</strong>
+            <span>Likes</span>
+        </div>
 
-        <div id="preview" class="preview"></div>
+        <div class="stat">
+            <strong id="followers">85</strong>
+            <span>Followers</span>
+        </div>
 
-        <button class="button" onclick="publishPost()">
-            Publish Post
-        </button>
+        <div class="stat">
+            <strong id="posts">12</strong>
+            <span>Posts</span>
+        </div>
+
     </div>
 
     <div class="card">
-        <h2>📰 KD Feed</h2>
+        <h2>⚡ Quick Actions</h2>
 
-        <div id="feed">
-            <p class="empty">No posts yet.</p>
+        <div class="actions">
+
+            <button class="primary" onclick="uploadVideo()">
+                🎥 Upload Video
+            </button>
+
+            <button onclick="createPost()">
+                ➕ Create Post
+            </button>
+
+            <button onclick="viewAnalytics()">
+                📊 View Analytics
+            </button>
+
+            <button onclick="manageContent()">
+                🗂️ Manage Content
+            </button>
+
         </div>
+
+        <div id="message"></div>
+    </div>
+
+    <div class="card">
+        <h2>📹 Recent Content</h2>
+
+        <div class="item">
+            <strong>My First KD Short</strong>
+            <span>1,000 views • 250 likes</span>
+        </div>
+
+        <div class="item">
+            <strong>Welcome to KD</strong>
+            <span>200 views • 50 likes</span>
+        </div>
+
+        <div class="item">
+            <strong>My New Video</strong>
+            <span>50 views • 20 likes</span>
+        </div>
+
     </div>
 
 </div>
 
 <script>
-    let selectedFile = null;
 
-    function previewMedia(event) {
-        const file = event.target.files[0];
-        const preview = document.getElementById("preview");
+function showMessage(text) {
+    document.getElementById("message").textContent = text;
+}
 
-        preview.innerHTML = "";
-        selectedFile = null;
+function uploadVideo() {
+    showMessage("Video upload system will be connected to KD Storage later.");
+}
 
-        if (!file) {
-            return;
-        }
+function createPost() {
+    showMessage("Post creator opened.");
+}
 
-        selectedFile = file;
+function viewAnalytics() {
+    showMessage("Detailed KD analytics will be connected later.");
+}
 
-        const url = URL.createObjectURL(file);
+function manageContent() {
+    showMessage("Content management will be added here.");
+}
 
-        if (file.type.startsWith("image/")) {
-            const image = document.createElement("img");
-            image.src = url;
-            image.alt = "Selected photo";
-            preview.appendChild(image);
-        } else if (file.type.startsWith("video/")) {
-            const video = document.createElement("video");
-            video.src = url;
-            video.controls = true;
-            preview.appendChild(video);
-        }
-
-        const removeButton = document.createElement("button");
-        removeButton.className = "remove-button";
-        removeButton.textContent = "Remove Media";
-        removeButton.onclick = removeMedia;
-
-        preview.appendChild(removeButton);
-    }
-
-    function removeMedia() {
-        selectedFile = null;
-
-        document.getElementById("mediaInput").value = "";
-        document.getElementById("preview").innerHTML = "";
-    }
-
-    function publishPost() {
-        const text = document.getElementById("postText").value.trim();
-        const feed = document.getElementById("feed");
-
-        if (text === "" && !selectedFile) {
-            alert("Please write something or choose a photo/video.");
-            return;
-        }
-
-        const empty = feed.querySelector(".empty");
-
-        if (empty) {
-            empty.remove();
-        }
-
-        const post = document.createElement("div");
-        post.className = "post";
-
-        const username = document.createElement("div");
-        username.className = "post-user";
-        username.textContent = "KD User";
-
-        post.appendChild(username);
-
-        if (text !== "") {
-            const postText = document.createElement("p");
-            postText.textContent = text;
-            post.appendChild(postText);
-        }
-
-        if (selectedFile) {
-            const url = URL.createObjectURL(selectedFile);
-
-            if (selectedFile.type.startsWith("image/")) {
-                const image = document.createElement("img");
-                image.src = url;
-                image.alt = "KD post photo";
-                post.appendChild(image);
-            }
-
-            if (selectedFile.type.startsWith("video/")) {
-                const video = document.createElement("video");
-                video.src = url;
-                video.controls = true;
-                post.appendChild(video);
-            }
-        }
-
-        feed.prepend(post);
-
-        document.getElementById("postText").value = "";
-        removeMedia();
-
-        alert("Post published successfully! 🎉");
-    }
 </script>
 
 </body>
