@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KD Safety Center</title>
+    <title>KD Social App</title>
 
     <style>
         * {
@@ -13,15 +14,19 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #f1f3f6;
+            background: #f2f4f7;
             color: #222;
+            padding-bottom: 75px;
         }
 
         header {
-            background: white;
-            padding: 20px;
+            background: #ffffff;
+            padding: 16px;
             text-align: center;
             border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         header h1 {
@@ -29,42 +34,79 @@
             font-size: 36px;
         }
 
-        .container {
-            max-width: 650px;
-            margin: 25px auto;
+        #pageTitle {
+            margin-top: 4px;
+            color: #666;
+        }
+
+        .page {
+            max-width: 700px;
+            margin: 20px auto;
             padding: 15px;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
         }
 
         .card {
             background: white;
-            padding: 22px;
-            margin-bottom: 20px;
+            padding: 20px;
+            margin-bottom: 18px;
             border-radius: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
         }
 
-        .safety-item {
-            padding: 16px 0;
-            border-bottom: 1px solid #eee;
+        .welcome {
+            text-align: center;
         }
 
-        .safety-item:last-child {
-            border-bottom: none;
+        .avatar {
+            width: 95px;
+            height: 95px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
         }
 
-        .safety-item h3 {
-            margin: 0 0 7px;
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin-top: 18px;
         }
 
-        .safety-item p {
-            color: #666;
-            line-height: 1.5;
+        .stats strong {
+            display: block;
+            font-size: 20px;
         }
 
-        button {
+        textarea,
+        input {
             width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .primary {
+            width: 100%;
+            margin-top: 12px;
             padding: 13px;
-            margin-top: 10px;
             border: none;
             border-radius: 9px;
             background: #222;
@@ -73,25 +115,75 @@
             cursor: pointer;
         }
 
-        .light-button {
-            background: #eeeeee;
-            color: #222;
+        .post {
+            background: #f7f7f7;
+            padding: 16px;
+            border-radius: 11px;
+            margin-top: 12px;
         }
 
-        textarea,
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            border: 1px solid #ccc;
-            border-radius: 9px;
-            font-size: 16px;
+        .post-user {
+            font-weight: bold;
+            margin-bottom: 8px;
         }
 
-        #result {
-            margin-top: 15px;
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .menu-grid button {
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #eee;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .nav {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 20;
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            border-top: 1px solid #ddd;
+            padding: 8px 3px;
+        }
+
+        .nav button {
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            padding: 7px 5px;
+            font-size: 12px;
+        }
+
+        .nav button.active {
+            font-weight: bold;
+        }
+
+        .message {
+            margin-top: 12px;
             text-align: center;
             font-weight: bold;
+        }
+
+        .search-result {
+            margin-top: 10px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #f7f7f7;
+        }
+
+        @media (max-width: 600px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -99,127 +191,369 @@
 <body>
 
 <header>
-    <h1>KD 🛡️</h1>
-    <p>Safety Center</p>
+    <h1>KD</h1>
+    <div id="pageTitle">Home</div>
 </header>
 
-<div class="container">
+<div class="page">
 
-    <div class="card">
-        <h2>Stay Safe on KD</h2>
-        <p>
-            Use these tools to control your experience and report
-            content or accounts that may violate KD rules.
-        </p>
-    </div>
+    <!-- HOME -->
+    <section id="home" class="section active">
 
-    <div class="card">
+        <div class="card welcome">
+            <h2>Welcome to KD 🎉</h2>
+            <p>Connect • Share • Discover</p>
+        </div>
 
-        <div class="safety-item">
-            <h3>🚫 Block a User</h3>
-            <p>Choose a user you do not want to interact with.</p>
+        <div class="card">
+            <h2>Quick Menu</h2>
+
+            <div class="menu-grid">
+                <button onclick="showSection('profile')">👤 Profile</button>
+                <button onclick="showSection('create')">➕ Create Post</button>
+                <button onclick="showSection('search')">🔍 Search</button>
+                <button onclick="showSection('messages')">💬 Messages</button>
+                <button onclick="showSection('notifications')">🔔 Notifications</button>
+                <button onclick="showSection('settings')">⚙️ Settings</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📰 KD Feed</h2>
+
+            <div id="feed">
+
+                <div class="post">
+                    <div class="post-user">KD Creator</div>
+                    <div>Welcome to the new KD app! 🚀</div>
+                    <button onclick="toggleLike(this)" style="margin-top:10px;">
+                        ❤️ Like
+                    </button>
+                </div>
+
+                <div class="post">
+                    <div class="post-user">KD User</div>
+                    <div>More KD features are coming soon.</div>
+                    <button onclick="toggleLike(this)" style="margin-top:10px;">
+                        ❤️ Like
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+    <!-- SEARCH -->
+    <section id="search" class="section">
+
+        <div class="card">
+            <h2>🔍 Search KD</h2>
 
             <input
-                id="blockUser"
+                id="searchInput"
                 type="text"
-                placeholder="Username"
+                placeholder="Search people, posts, groups..."
             >
 
-            <button onclick="blockUser()">
-                Block User
+            <button class="primary" onclick="searchKD()">
+                Search
             </button>
+
+            <div id="searchResults"></div>
         </div>
 
-        <div class="safety-item">
-            <h3>⚠️ Report Content</h3>
-            <p>
-                Report content that may violate KD community rules.
-            </p>
+    </section>
+
+    <!-- CREATE -->
+    <section id="create" class="section">
+
+        <div class="card">
+            <h2>➕ Create Post</h2>
 
             <textarea
-                id="reportReason"
-                placeholder="Tell us what you want to report..."
+                id="postText"
+                placeholder="What's on your mind?"
             ></textarea>
 
-            <button onclick="reportContent()">
-                Submit Report
+            <button class="primary" onclick="createPost()">
+                Publish Post
             </button>
+
+            <div id="createMessage" class="message"></div>
         </div>
 
-        <div class="safety-item">
-            <h3>🔒 Privacy</h3>
-            <p>
-                Review your privacy and interaction settings.
-            </p>
+    </section>
 
-            <button
-                class="light-button"
-                onclick="privacySettings()"
+    <!-- NOTIFICATIONS -->
+    <section id="notifications" class="section">
+
+        <div class="card">
+            <h2>🔔 Notifications</h2>
+
+            <div class="post">❤️ Someone liked your post.</div>
+            <div class="post">💬 Someone commented on your post.</div>
+            <div class="post">👤 Someone followed you.</div>
+        </div>
+
+    </section>
+
+    <!-- MESSAGES -->
+    <section id="messages" class="section">
+
+        <div class="card">
+            <h2>💬 Messages</h2>
+
+            <div id="chatBox" class="post">
+                <div><strong>KD User:</strong> Hello! 👋</div>
+            </div>
+
+            <input
+                id="messageInput"
+                type="text"
+                placeholder="Write a message..."
+                style="margin-top:12px;"
             >
-                Open Privacy Settings
+
+            <button class="primary" onclick="sendMessage()">
+                Send
             </button>
         </div>
 
-    </div>
+    </section>
 
-    <div class="card">
-        <h2>📜 KD Community Rules</h2>
+    <!-- PROFILE -->
+    <section id="profile" class="section">
 
-        <p>• Be respectful to other users.</p>
-        <p>• Do not post illegal or harmful content.</p>
-        <p>• Do not harass or threaten other users.</p>
-        <p>• Protect your personal information.</p>
-        <p>• Report suspicious or abusive behavior.</p>
-    </div>
+        <div class="card welcome">
 
-    <div id="result"></div>
+            <div class="avatar">👤</div>
+
+            <h2>KD User</h2>
+            <p>Welcome to my KD profile.</p>
+
+            <div class="stats">
+                <div>
+                    <strong>0</strong>
+                    Posts
+                </div>
+
+                <div>
+                    <strong>0</strong>
+                    Followers
+                </div>
+
+                <div>
+                    <strong>0</strong>
+                    Following
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="settings" class="section">
+
+        <div class="card">
+            <h2>⚙️ KD Settings</h2>
+
+            <div class="post">
+                🔐 Privacy Settings
+            </div>
+
+            <div class="post">
+                🔔 Notification Settings
+            </div>
+
+            <div class="post">
+                🛡️ Safety Center
+            </div>
+
+            <div class="post">
+                ℹ️ About KD
+            </div>
+        </div>
+
+    </section>
 
 </div>
 
+<!-- BOTTOM NAVIGATION -->
+<nav class="nav">
+
+    <button class="active" onclick="showSection('home', this)">
+        🏠<br>Home
+    </button>
+
+    <button onclick="showSection('search', this)">
+        🔍<br>Search
+    </button>
+
+    <button onclick="showSection('create', this)">
+        ➕<br>Create
+    </button>
+
+    <button onclick="showSection('notifications', this)">
+        🔔<br>Alerts
+    </button>
+
+    <button onclick="showSection('messages', this)">
+        💬<br>Chat
+    </button>
+
+    <button onclick="showSection('profile', this)">
+        👤<br>Profile
+    </button>
+
+</nav>
+
 <script>
 
-function blockUser() {
+function showSection(sectionId, clickedButton) {
 
-    const username =
-        document.getElementById("blockUser").value.trim();
+    document.querySelectorAll(".section").forEach(function(section) {
+        section.classList.remove("active");
+    });
 
-    const result =
-        document.getElementById("result");
+    document.getElementById(sectionId).classList.add("active");
 
-    if (username === "") {
-        result.textContent =
-            "Please enter a username.";
+    document.getElementById("pageTitle").textContent =
+        sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
+
+    if (clickedButton) {
+        document.querySelectorAll(".nav button").forEach(function(button) {
+            button.classList.remove("active");
+        });
+
+        clickedButton.classList.add("active");
+    }
+
+    window.scrollTo(0, 0);
+}
+
+function toggleLike(button) {
+
+    if (button.textContent.includes("Like")) {
+        button.textContent = "❤️ Liked";
+    } else {
+        button.textContent = "❤️ Like";
+    }
+}
+
+function createPost() {
+
+    const input = document.getElementById("postText");
+    const message = document.getElementById("createMessage");
+    const text = input.value.trim();
+
+    if (text === "") {
+        message.textContent = "Please write something.";
         return;
     }
 
-    result.textContent =
-        "Demo: " + username + " has been blocked.";
+    const post = document.createElement("div");
+    post.className = "post";
+
+    const user = document.createElement("div");
+    user.className = "post-user";
+    user.textContent = "KD User";
+
+    const content = document.createElement("div");
+    content.textContent = text;
+
+    const like = document.createElement("button");
+    like.textContent = "❤️ Like";
+    like.style.marginTop = "10px";
+    like.onclick = function() {
+        toggleLike(like);
+    };
+
+    post.appendChild(user);
+    post.appendChild(content);
+    post.appendChild(like);
+
+    document.getElementById("feed").prepend(post);
+
+    input.value = "";
+    message.textContent = "Post published! 🎉";
+
+    setTimeout(function() {
+        message.textContent = "";
+    }, 2000);
+
+    showSection("home");
 }
 
-function reportContent() {
+function searchKD() {
 
-    const reason =
-        document.getElementById("reportReason").value.trim();
+    const query = document.getElementById("searchInput")
+        .value
+        .trim()
+        .toLowerCase();
 
-    const result =
-        document.getElementById("result");
+    const results = document.getElementById("searchResults");
 
-    if (reason === "") {
-        result.textContent =
-            "Please describe the problem.";
+    if (query === "") {
+        results.innerHTML = "<p>Please enter a search.</p>";
         return;
     }
 
-    result.textContent =
-        "Demo report submitted successfully.";
-    
-    document.getElementById("reportReason").value = "";
+    const items = [
+        "KD User",
+        "KD Creator",
+        "KD Community",
+        "KD Social App",
+        "KD Shorts"
+    ];
+
+    const matches = items.filter(function(item) {
+        return item.toLowerCase().includes(query);
+    });
+
+    results.innerHTML = "";
+
+    if (matches.length === 0) {
+        results.innerHTML = "<p>No results found.</p>";
+        return;
+    }
+
+    matches.forEach(function(item) {
+
+        const result = document.createElement("div");
+        result.className = "search-result";
+        result.textContent = "🔎 " + item;
+
+        results.appendChild(result);
+    });
 }
 
-function privacySettings() {
+function sendMessage() {
 
-    document.getElementById("result").textContent =
-        "Privacy Settings will be connected to the KD account system later.";
+    const input = document.getElementById("messageInput");
+    const text = input.value.trim();
+
+    if (text === "") {
+        return;
+    }
+
+    const message = document.createElement("div");
+    message.className = "post";
+    message.style.marginTop = "10px";
+    message.innerHTML = "<strong>You:</strong> " + escapeHTML(text);
+
+    document.getElementById("chatBox").appendChild(message);
+
+    input.value = "";
+}
+
+function escapeHTML(text) {
+
+    const div = document.createElement("div");
+    div.textContent = text;
+
+    return div.innerHTML;
 }
 
 </script>
