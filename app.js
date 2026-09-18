@@ -1,203 +1,118 @@
-function showSection(sectionId, clickedButton) {
+function showSection(sectionId) {
 
-    document.querySelectorAll(".section").forEach(function(section) {
+    const sections = document.querySelectorAll(".section");
+
+    sections.forEach(function(section) {
         section.classList.remove("active");
     });
 
-    const section = document.getElementById(sectionId);
+    const selected = document.getElementById(sectionId);
 
-    if (section) {
-        section.classList.add("active");
+    if (selected) {
+        selected.classList.add("active");
     }
 
-    const title = document.getElementById("pageTitle");
+    const titles = {
+        home: "Home",
+        search: "Search",
+        create: "Create",
+        notifications: "Notifications",
+        messages: "Messages",
+        profile: "Profile",
+        settings: "Settings"
+    };
 
-    if (title) {
-        const titles = {
-            home: "Home",
-            search: "Search",
-            create: "Create Post",
-            notifications: "Notifications",
-            messages: "Messages",
-            profile: "Profile",
-            settings: "Settings"
-        };
+    document.getElementById("pageTitle").textContent =
+        titles[sectionId] || "KD";
 
-        title.textContent = titles[sectionId] || "KD";
-    }
-
-    document.querySelectorAll(".nav button").forEach(function(button) {
-        button.classList.remove("active");
-    });
-
-    if (clickedButton) {
-        clickedButton.classList.add("active");
-    }
-
-    window.scrollTo(0, 0);
 }
 
 
 function toggleLike(button) {
 
-    if (button.textContent.includes("Liked")) {
+    if (button.dataset.liked === "true") {
+        button.dataset.liked = "false";
         button.textContent = "❤️ Like";
     } else {
-        button.textContent = "❤️ Liked";
+        button.dataset.liked = "true";
+        button.textContent = "💖 Liked";
     }
+
 }
 
 
 function createPost() {
 
-    const input = document.getElementById("postText");
-    const message = document.getElementById("createMessage");
-
-    if (!input) {
-        return;
-    }
-
-    const text = input.value.trim();
-
-    if (text === "") {
-
-        if (message) {
-            message.textContent = "Please write something.";
-        }
-
-        return;
-    }
-
+    const textBox = document.getElementById("postText");
     const feed = document.getElementById("feed");
 
-    if (!feed) {
+    if (!textBox || !feed) return;
+
+    const text = textBox.value.trim();
+
+    if (text === "") {
+        alert("Please write something first.");
         return;
     }
 
     const post = document.createElement("div");
+
     post.className = "post";
 
-    const user = document.createElement("div");
-    user.className = "post-user";
-    user.textContent = "KD User";
+    post.innerHTML = `
+        <div class="post-user">Krishnadev</div>
+        <p></p>
+        <button onclick="toggleLike(this)">
+            ❤️ Like
+        </button>
+    `;
 
-    const content = document.createElement("div");
-    content.textContent = text;
-
-    const like = document.createElement("button");
-
-    like.textContent = "❤️ Like";
-    like.style.marginTop = "10px";
-
-    like.onclick = function() {
-        toggleLike(like);
-    };
-
-    post.appendChild(user);
-    post.appendChild(content);
-    post.appendChild(like);
+    post.querySelector("p").textContent = text;
 
     feed.prepend(post);
 
-    input.value = "";
-
-    if (message) {
-        message.textContent = "Post published! 🎉";
-
-        setTimeout(function() {
-            message.textContent = "";
-        }, 2000);
-    }
+    textBox.value = "";
 
     showSection("home");
+
 }
 
 
 function searchKD() {
 
     const input = document.getElementById("searchInput");
-    const results = document.getElementById("searchResults");
+    const result = document.getElementById("searchResult");
 
-    if (!input || !results) {
+    if (!input || !result) return;
+
+    const text = input.value.trim();
+
+    if (text === "") {
+        result.textContent = "Please enter something to search.";
         return;
     }
 
-    const query = input.value.trim().toLowerCase();
+    result.textContent = "Searching KD for: " + text;
 
-    if (query === "") {
-        results.innerHTML = "<p>Please enter a search.</p>";
-        return;
-    }
-
-    const items = [
-        "KD User",
-        "KD Creator",
-        "KD Community",
-        "KD Social App",
-        "KD Shorts"
-    ];
-
-    const matches = items.filter(function(item) {
-        return item.toLowerCase().includes(query);
-    });
-
-    results.innerHTML = "";
-
-    if (matches.length === 0) {
-        results.innerHTML = "<p>No results found.</p>";
-        return;
-    }
-
-    matches.forEach(function(item) {
-
-        const result = document.createElement("div");
-
-        result.className = "search-result";
-        result.textContent = "🔎 " + item;
-
-        results.appendChild(result);
-    });
 }
 
 
 function sendMessage() {
 
     const input = document.getElementById("messageInput");
-    const chatBox = document.getElementById("chatBox");
+    const result = document.getElementById("messageResult");
 
-    if (!input || !chatBox) {
+    if (!input || !result) return;
+
+    const message = input.value.trim();
+
+    if (message === "") {
+        result.textContent = "Please type a message.";
         return;
     }
 
-    const text = input.value.trim();
-
-    if (text === "") {
-        return;
-    }
-
-    const message = document.createElement("div");
-
-    message.className = "post";
-
-    const strong = document.createElement("strong");
-    strong.textContent = "You: ";
-
-    const textNode = document.createTextNode(text);
-
-    message.appendChild(strong);
-    message.appendChild(textNode);
-
-    chatBox.appendChild(message);
+    result.textContent = "Message sent: " + message;
 
     input.value = "";
-}
 
-
-function escapeHTML(text) {
-
-    const div = document.createElement("div");
-
-    div.textContent = text;
-
-    return div.innerHTML;
 }
