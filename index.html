@@ -7,358 +7,297 @@
 
     <title>KD Social App</title>
 
-    <meta name="description"
-        content="KD Social App - Connect, Share, Discover">
-
-    <meta name="theme-color" content="#1565c0">
+    <link rel="stylesheet" href="style.css">
 
     <link rel="manifest" href="manifest.json">
 
-    <link rel="stylesheet" href="style.css">
+    <meta name="theme-color" content="#222222">
 </head>
 
 <body>
 
-    <!-- HEADER -->
-    <header>
-        <h1>KD</h1>
-        <p id="pageTitle">Connect • Share • Discover</p>
-    </header>
+<header>
+    <h1>KD</h1>
+    <p id="pageTitle">Home</p>
+</header>
 
+<main class="page">
 
-    <!-- MAIN CONTENT -->
-    <main>
+    <!-- HOME -->
+    <section id="home" class="section active">
 
-        <!-- HOME -->
-        <section id="home" class="section active">
+        <div class="card welcome">
 
-            <div class="card welcome">
-
-                <div class="avatar">
-                    KD
-                </div>
-
-                <h2>Welcome to KD</h2>
-
-                <p>
-                    Connect with people, share your moments,
-                    and discover something new.
-                </p>
-
+            <div class="avatar">
+                KD
             </div>
 
+            <h2>Welcome to KD</h2>
 
-            <!-- CREATE POST -->
+            <p>
+                Connect, Share, Discover
+            </p>
 
-            <div class="card">
+        </div>
 
-                <h3>Create a Post</h3>
+        <div class="card">
 
-                <textarea
-                    id="postText"
-                    placeholder="What's happening?">
-                </textarea>
+            <h3>Latest Post</h3>
 
-                <button
-                    class="primary"
-                    onclick="createPost()">
-                    Publish Post
+            <div class="post">
+
+                <div class="post-user">
+                    KD User
+                </div>
+
+                <p>
+                    Welcome to KD Social App! 🎉
+                </p>
+
+                <button onclick="toggleLike(this)">
+                    ❤️ Like
                 </button>
 
             </div>
 
+        </div>
 
-            <!-- FEED -->
+    </section>
 
-            <div class="card">
 
-                <h3>KD Feed</h3>
+    <!-- SEARCH -->
+    <section id="search" class="section">
 
-                <div id="feed">
+        <div class="card">
 
-                    <div class="post">
+            <h2>Search KD</h2>
 
-                        <div class="post-user">
-                            Krishnadev
-                        </div>
+            <input
+                id="searchInput"
+                type="text"
+                placeholder="Search KD">
 
-                        <p>
-                            Welcome to KD Social App! 🎉
-                        </p>
+            <button onclick="searchKD()">
+                Search
+            </button>
 
-                        <button onclick="toggleLike(this)">
-                            ❤️ Like
-                        </button>
+            <div
+                id="searchResult"
+                class="search-result">
+            </div>
 
-                    </div>
+        </div>
 
+    </section>
+
+
+    <!-- CREATE -->
+    <section id="create" class="section">
+
+        <div class="card">
+
+            <h2>Create Post</h2>
+
+            <textarea
+                id="postText"
+                placeholder="What's happening?">
+            </textarea>
+
+            <button
+                class="primary"
+                onclick="createPost()">
+                Publish
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- NOTIFICATIONS -->
+    <section id="notifications" class="section">
+
+        <div class="card">
+
+            <h2>Notifications</h2>
+
+            <p>
+                🔔 No new notifications
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- MESSAGES -->
+    <section id="messages" class="section">
+
+        <div class="card">
+
+            <h2>Messages</h2>
+
+            <input
+                id="messageInput"
+                type="text"
+                placeholder="Type a message">
+
+            <button onclick="sendMessage()">
+                Send
+            </button>
+
+            <div
+                id="messageResult"
+                class="message">
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PROFILE -->
+    <section id="profile" class="section">
+
+        <div class="card profile">
+
+            <div class="avatar">
+                KD
+            </div>
+
+            <h2>Krishnadev</h2>
+
+            <p>KD Social App</p>
+
+            <div class="stats">
+
+                <div>
+                    <strong>0</strong>
+                    Posts
+                </div>
+
+                <div>
+                    <strong>0</strong>
+                    Followers
+                </div>
+
+                <div>
+                    <strong>0</strong>
+                    Following
                 </div>
 
             </div>
 
-        </section>
+        </div>
+
+    </section>
 
 
-        <!-- SEARCH -->
+    <!-- SETTINGS -->
+    <section id="settings" class="section">
 
-        <section id="search" class="section">
+        <div class="card">
 
-            <div class="card">
+            <h2>Settings</h2>
 
-                <h2>Search KD</h2>
+            <div class="menu-grid">
 
-                <input
-                    type="text"
-                    id="searchInput"
-                    placeholder="Search people or posts">
+                <button>👤 Account</button>
 
-                <button
-                    class="primary"
-                    onclick="searchKD()">
-                    Search
-                </button>
+                <button>🔒 Privacy</button>
 
-                <div
-                    id="searchResult"
-                    class="search-result">
-                </div>
+                <button>🔔 Notifications</button>
+
+                <button>ℹ️ About KD</button>
 
             </div>
 
-        </section>
+        </div>
 
+    </section>
 
-        <!-- CREATE -->
+</main>
 
-        <section id="create" class="section">
 
-            <div class="card">
+<!-- BOTTOM NAVIGATION -->
 
-                <h2>Create</h2>
+<nav class="nav">
 
-                <p>
-                    Create posts, photos, videos and more.
-                </p>
+    <button
+        class="active"
+        onclick="showSection('home')">
+        🏠
+        <br>
+        Home
+    </button>
 
-                <button
-                    class="primary"
-                    onclick="createPost()">
-                    Create Post
-                </button>
+    <button
+        onclick="showSection('search')">
+        🔍
+        <br>
+        Search
+    </button>
 
-            </div>
+    <button
+        onclick="showSection('create')">
+        ➕
+        <br>
+        Create
+    </button>
 
-        </section>
+    <button
+        onclick="showSection('notifications')">
+        🔔
+        <br>
+        Alerts
+    </button>
 
+    <button
+        onclick="showSection('messages')">
+        💬
+        <br>
+        Messages
+    </button>
 
-        <!-- NOTIFICATIONS -->
+    <button
+        onclick="showSection('profile')">
+        👤
+        <br>
+        Profile
+    </button>
 
-        <section id="notifications" class="section">
+    <button
+        onclick="showSection('settings')">
+        ⚙️
+        <br>
+        Settings
+    </button>
 
-            <div class="card">
+</nav>
 
-                <h2>Notifications</h2>
 
-                <p>
-                    🔔 Your notifications will appear here.
-                </p>
+<!-- APP JAVASCRIPT -->
 
-            </div>
+<script src="app.js"></script>
 
-        </section>
 
+<!-- SERVICE WORKER -->
 
-        <!-- MESSAGES -->
+<script>
 
-        <section id="messages" class="section">
+if ("serviceWorker" in navigator) {
 
-            <div class="card">
+    window.addEventListener("load", function () {
 
-                <h2>Messages</h2>
+        navigator.serviceWorker.register(
+            "service-worker.js"
+        );
 
-                <input
-                    type="text"
-                    id="messageInput"
-                    placeholder="Type a message">
+    });
 
-                <button
-                    class="primary"
-                    onclick="sendMessage()">
-                    Send
-                </button>
+}
 
-                <div
-                    id="messageResult"
-                    class="message">
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- PROFILE -->
-
-        <section id="profile" class="section">
-
-            <div class="card profile">
-
-                <div class="avatar">
-                    KD
-                </div>
-
-                <h2>Krishnadev</h2>
-
-                <p>
-                    KD Social App user
-                </p>
-
-
-                <div class="stats">
-
-                    <div>
-                        <strong>0</strong>
-                        Posts
-                    </div>
-
-                    <div>
-                        <strong>0</strong>
-                        Followers
-                    </div>
-
-                    <div>
-                        <strong>0</strong>
-                        Following
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- SETTINGS -->
-
-        <section id="settings" class="section">
-
-            <div class="card">
-
-                <h2>Settings</h2>
-
-                <div class="menu-grid">
-
-                    <button>
-                        👤 Account
-                    </button>
-
-                    <button>
-                        🔒 Privacy
-                    </button>
-
-                    <button>
-                        🔔 Notifications
-                    </button>
-
-                    <button>
-                        ℹ️ About KD
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- BOTTOM NAVIGATION -->
-
-    <nav class="nav">
-
-        <button
-            class="active"
-            onclick="showSection('home')">
-            🏠
-            <br>
-            Home
-        </button>
-
-        <button
-            onclick="showSection('search')">
-            🔍
-            <br>
-            Search
-        </button>
-
-        <button
-            onclick="showSection('create')">
-            ➕
-            <br>
-            Create
-        </button>
-
-        <button
-            onclick="showSection('notifications')">
-            🔔
-            <br>
-            Alerts
-        </button>
-
-        <button
-            onclick="showSection('messages')">
-            💬
-            <br>
-            Messages
-        </button>
-
-        <button
-            onclick="showSection('profile')">
-            👤
-            <br>
-            Profile
-        </button>
-
-    </nav>
-
-
-    <!-- JAVASCRIPT -->
-
-    <script src="app.js"></script>
-
-
-    <!-- SERVICE WORKER -->
-
-    <script>
-
-        if ("serviceWorker" in navigator) {
-
-            window.addEventListener("load", function () {
-
-                navigator.serviceWorker
-                    .register("service-worker.js")
-                    .then(function () {
-
-                        console.log(
-                            "KD service worker registered."
-                        );
-
-                    })
-                    .catch(function (error) {
-
-                        console.log(
-                            "Service worker registration failed:",
-                            error
-                        );
-
-                    });
-
-            });
-
-        }
-
-    </script>
+</script>
 
 </body>
 
