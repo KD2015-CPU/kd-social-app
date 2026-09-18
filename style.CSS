@@ -10,8 +10,6 @@ body {
     padding-bottom: 75px;
 }
 
-/* Header */
-
 header {
     background: #ffffff;
     padding: 16px;
@@ -32,8 +30,6 @@ header h1 {
     color: #666;
 }
 
-/* Page */
-
 .page {
     max-width: 700px;
     margin: 20px auto;
@@ -48,24 +44,18 @@ header h1 {
     display: block;
 }
 
-/* Cards */
-
 .card {
     background: white;
     padding: 20px;
     margin-top: 15px;
     margin-bottom: 18px;
     border-radius: 15px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
 }
-
-/* Welcome */
 
 .welcome {
     text-align: center;
 }
-
-/* Avatar */
 
 .avatar {
     width: 80px;
@@ -80,8 +70,6 @@ header h1 {
     margin: auto;
 }
 
-/* Buttons */
-
 button {
     background: #1565c0;
     color: white;
@@ -95,13 +83,8 @@ button {
 .primary {
     width: 100%;
     margin-top: 12px;
-    padding: 13px;
     background: #222;
-    color: white;
-    border-radius: 9px;
 }
-
-/* Forms */
 
 input,
 textarea {
@@ -115,10 +98,7 @@ textarea {
 
 textarea {
     min-height: 110px;
-    resize: vertical;
 }
-
-/* Posts */
 
 .post {
     background: #f7f7f7;
@@ -132,13 +112,9 @@ textarea {
     margin-bottom: 8px;
 }
 
-/* Profile */
-
 .profile {
     text-align: center;
 }
-
-/* Stats */
 
 .stats {
     display: flex;
@@ -152,8 +128,6 @@ textarea {
     font-size: 20px;
 }
 
-/* Menu */
-
 .menu-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -161,29 +135,23 @@ textarea {
 }
 
 .menu-grid button {
-    padding: 15px;
     background: #eee;
     color: #222;
 }
-
-/* Bottom Navigation */
 
 .nav {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 20;
     display: flex;
     justify-content: space-around;
     background: white;
     border-top: 1px solid #ddd;
     padding: 8px 3px;
-    box-shadow: 0 -2px 8px #ccc;
 }
 
 .nav button {
-    border: none;
     background: transparent;
     color: #222;
     padding: 7px 5px;
@@ -194,33 +162,14 @@ textarea {
     font-weight: bold;
 }
 
-/* Messages */
-
-.message {
-    margin-top: 12px;
-    text-align: center;
-    font-weight: bold;
-}
-
-/* Search */
-
+.message,
 .search-result {
-    margin-top: 10px;
-    padding: 14px;
-    border-radius: 10px;
-    background: #f7f7f7;
+    margin-top: 12px;
+    padding: 12px;
+    text-align: center;
 }
-
-/* Hidden */
-
-.hidden {
-    display: none;
-}
-
-/* Mobile */
 
 @media (max-width: 600px) {
-
     .menu-grid {
         grid-template-columns: 1fr;
     }
@@ -228,5 +177,4 @@ textarea {
     .page {
         padding: 10px;
     }
-
 }
