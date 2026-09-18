@@ -1,178 +1,255 @@
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    margin: 0;
     font-family: Arial, sans-serif;
-    background: #f2f4f7;
+    background: #f4f7fb;
     color: #222;
-    padding-bottom: 75px;
+    padding-bottom: 80px;
 }
 
-header {
-    background: #ffffff;
-    padding: 16px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
+/* TOP BAR */
+
+.top-bar {
+    height: 70px;
+    background: linear-gradient(135deg, #1565c0, #7b1fa2);
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 10px 18px;
     position: sticky;
     top: 0;
     z-index: 10;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 36px;
-}
-
-#pageTitle {
-    margin-top: 4px;
-    color: #666;
-}
-
-.page {
-    max-width: 700px;
-    margin: 20px auto;
-    padding: 15px;
-}
-
-.section {
-    display: none;
-}
-
-.section.active {
-    display: block;
-}
-
-.card {
-    background: white;
-    padding: 20px;
-    margin-bottom: 18px;
+.logo {
+    width: 48px;
+    height: 48px;
     border-radius: 15px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-}
-
-.welcome {
-    text-align: center;
-}
-
-.avatar {
-    width: 95px;
-    height: 95px;
-    margin: 0 auto 15px;
-    border-radius: 50%;
-    background: #ddd;
+    background: linear-gradient(135deg, #ff9800, #ff4081);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 42px;
-}
-
-.stats {
-    display: flex;
-    justify-content: space-around;
-    text-align: center;
-    margin-top: 18px;
-}
-
-.stats strong {
-    display: block;
-    font-size: 20px;
-}
-
-textarea,
-input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    font-size: 16px;
-}
-
-textarea {
-    min-height: 110px;
-    resize: vertical;
-}
-
-.primary {
-    width: 100%;
-    margin-top: 12px;
-    padding: 13px;
-    border: none;
-    border-radius: 9px;
-    background: #222;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.post {
-    background: #f7f7f7;
-    padding: 16px;
-    border-radius: 11px;
-    margin-top: 12px;
-}
-
-.post-user {
+    font-size: 22px;
     font-weight: bold;
-    margin-bottom: 8px;
+    margin-right: 12px;
 }
 
-.menu-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-}
-
-.menu-grid button {
-    padding: 15px;
-    border: none;
-    border-radius: 10px;
-    background: #eee;
-    cursor: pointer;
-    font-size: 15px;
-}
-
-.nav {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 20;
+.app-name {
     display: flex;
-    justify-content: space-around;
-    background: white;
-    border-top: 1px solid #ddd;
-    padding: 8px 3px;
+    flex-direction: column;
 }
 
-.nav button {
+.app-name strong {
+    font-size: 22px;
+}
+
+.app-name span {
+    font-size: 11px;
+    opacity: 0.85;
+}
+
+.search-btn {
+    margin-left: auto;
     border: none;
-    background: transparent;
-    cursor: pointer;
-    padding: 7px 5px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    font-size: 19px;
+}
+
+/* STORIES */
+
+.stories-section {
+    padding: 18px;
+}
+
+.stories-section h2 {
+    margin-bottom: 12px;
+}
+
+.stories {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+}
+
+.story {
+    min-width: 70px;
+    text-align: center;
     font-size: 12px;
 }
 
-.nav button.active {
-    font-weight: bold;
+.story-circle {
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    margin: auto auto 6px;
+
+    background: linear-gradient(
+        135deg,
+        #ff9800,
+        #ff4081,
+        #7b1fa2
+    );
+
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 24px;
+    border: 3px solid white;
+    box-shadow: 0 3px 10px #bbb;
 }
 
-.message {
-    margin-top: 12px;
-    text-align: center;
-    font-weight: bold;
-}
+/* CREATE POST */
 
-.search-result {
-    margin-top: 10px;
+.create-post {
+    background: white;
+    margin: 0 15px 15px;
     padding: 14px;
-    border-radius: 10px;
-    background: #f7f7f7;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 3px 12px #ddd;
 }
 
-@media (max-width: 600px) {
-    .menu-grid {
-        grid-template-columns: 1fr;
-    }
+.profile-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff9800, #ff4081);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.profile-icon.blue {
+    background: linear-gradient(135deg, #1565c0, #00bcd4);
+}
+
+.create-post button {
+    flex: 1;
+    border: none;
+    background: #f0f2f5;
+    padding: 13px;
+    border-radius: 25px;
+    text-align: left;
+    color: #777;
+    cursor: pointer;
+}
+
+/* POST */
+
+.post {
+    background: white;
+    margin: 15px;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px #ddd;
+}
+
+.post-header {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 15px;
+}
+
+.post-header small {
+    display: block;
+    color: #777;
+    margin-top: 3px;
+}
+
+.post-text {
+    padding: 0 15px 15px;
+    line-height: 1.5;
+}
+
+.post-image {
+    height: 240px;
+    background: linear-gradient(
+        135deg,
+        #1565c0,
+        #00bcd4,
+        #7b1fa2,
+        #ff4081,
+        #ff9800
+    );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.post-image span {
+    color: white;
+    font-size: 70px;
+    font-weight: bold;
+}
+
+.post-actions {
+    display: flex;
+    justify-content: space-around;
+    padding: 12px;
+}
+
+.post-actions button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    height: 68px;
+    background: white;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    box-shadow: 0 -3px 12px #ddd;
+    z-index: 20;
+}
+
+.bottom-nav button {
+    border: none;
+    background: none;
+    color: #777;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.bottom-nav button:first-child {
+    color: #1565c0;
+}
+
+.bottom-nav button {
+    font-size: 20px;
+}
+
+.bottom-nav span {
+    font-size: 10px;
 }
