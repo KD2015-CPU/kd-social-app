@@ -1,577 +1,210 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>KD Social App</title>
-<link rel="stylesheet" href="style.css">
+
+    <meta name="description" content="KD Social App - Connect, Share, Discover">
+    <meta name="theme-color" content="#1565c0">
+
     <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#222222">
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f2f4f7;
-            color: #222;
-            padding-bottom: 75px;
-        }
-
-        header {
-            background: #ffffff;
-            padding: 16px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 36px;
-        }
-
-        #pageTitle {
-            margin-top: 4px;
-            color: #666;
-        }
-
-        .page {
-            max-width: 700px;
-            margin: 20px auto;
-            padding: 15px;
-        }
-
-        .section {
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        .card {
-            background: white;
-            padding: 20px;
-            margin-bottom: 18px;
-            border-radius: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-        }
-
-        .welcome {
-            text-align: center;
-        }
-
-        .avatar {
-            width: 95px;
-            height: 95px;
-            margin: 0 auto 15px;
-            border-radius: 50%;
-            background: #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 42px;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            text-align: center;
-            margin-top: 18px;
-        }
-
-        .stats strong {
-            display: block;
-            font-size: 20px;
-        }
-
-        textarea,
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            font-size: 16px;
-        }
-
-        textarea {
-            min-height: 110px;
-            resize: vertical;
-        }
-
-        .primary {
-            width: 100%;
-            margin-top: 12px;
-            padding: 13px;
-            border: none;
-            border-radius: 9px;
-            background: #222;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .post {
-            background: #f7f7f7;
-            padding: 16px;
-            border-radius: 11px;
-            margin-top: 12px;
-        }
-
-        .post-user {
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .menu-grid button {
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
-            background: #eee;
-            cursor: pointer;
-            font-size: 15px;
-        }
-
-        .nav {
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 20;
-            display: flex;
-            justify-content: space-around;
-            background: white;
-            border-top: 1px solid #ddd;
-            padding: 8px 3px;
-        }
-
-        .nav button {
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            padding: 7px 5px;
-            font-size: 12px;
-        }
-
-        .nav button.active {
-            font-weight: bold;
-        }
-
-        .message {
-            margin-top: 12px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .search-result {
-            margin-top: 10px;
-            padding: 14px;
-            border-radius: 10px;
-            background: #f7f7f7;
-        }
-
-        @media (max-width: 600px) {
-            .menu-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>
-    <h1>KD</h1>
-    <div id="pageTitle">Home</div>
-</header>
+    <!-- TOP BAR -->
+    <header class="top-bar">
+        <div class="logo">KD</div>
 
-<div class="page">
-
-    <!-- HOME -->
-    <section id="home" class="section active">
-
-        <div class="card welcome">
-            <h2>Welcome to KD 🎉</h2>
-            <p>Connect • Share • Discover</p>
+        <div class="app-name">
+            <strong>KD</strong>
+            <span>Social App</span>
         </div>
 
-        <div class="card">
-            <h2>Quick Menu</h2>
+        <button class="search-btn" onclick="openSearch()">🔍</button>
+    </header>
 
-            <div class="menu-grid">
-                <button onclick="showSection('profile')">👤 Profile</button>
-                <button onclick="showSection('create')">➕ Create Post</button>
-                <button onclick="showSection('search')">🔍 Search</button>
-                <button onclick="showSection('messages')">💬 Messages</button>
-                <button onclick="showSection('notifications')">🔔 Notifications</button>
-                <button onclick="showSection('settings')">⚙️ Settings</button>
-            </div>
-        </div>
 
-        <div class="card">
-            <h2>📰 KD Feed</h2>
+    <!-- STORIES -->
+    <section class="stories-section">
 
-            <div id="feed">
+        <h2>Stories</h2>
 
-                <div class="post">
-                    <div class="post-user">KD Creator</div>
-                    <div>Welcome to the new KD app! 🚀</div>
-                    <button onclick="toggleLike(this)" style="margin-top:10px;">
-                        ❤️ Like
-                    </button>
-                </div>
+        <div class="stories">
 
-                <div class="post">
-                    <div class="post-user">KD User</div>
-                    <div>More KD features are coming soon.</div>
-                    <button onclick="toggleLike(this)" style="margin-top:10px;">
-                        ❤️ Like
-                    </button>
-                </div>
-
-            </div>
-        </div>
-
-    </section>
-
-    <!-- SEARCH -->
-    <section id="search" class="section">
-
-        <div class="card">
-            <h2>🔍 Search KD</h2>
-
-            <input
-                id="searchInput"
-                type="text"
-                placeholder="Search people, posts, groups..."
-            >
-
-            <button class="primary" onclick="searchKD()">
-                Search
-            </button>
-
-            <div id="searchResults"></div>
-        </div>
-
-    </section>
-
-    <!-- CREATE -->
-    <section id="create" class="section">
-
-        <div class="card">
-            <h2>➕ Create Post</h2>
-
-            <textarea
-                id="postText"
-                placeholder="What's on your mind?"
-            ></textarea>
-
-            <button class="primary" onclick="createPost()">
-                Publish Post
-            </button>
-
-            <div id="createMessage" class="message"></div>
-        </div>
-
-    </section>
-
-    <!-- NOTIFICATIONS -->
-    <section id="notifications" class="section">
-
-        <div class="card">
-            <h2>🔔 Notifications</h2>
-
-            <div class="post">❤️ Someone liked your post.</div>
-            <div class="post">💬 Someone commented on your post.</div>
-            <div class="post">👤 Someone followed you.</div>
-        </div>
-
-    </section>
-
-    <!-- MESSAGES -->
-    <section id="messages" class="section">
-
-        <div class="card">
-            <h2>💬 Messages</h2>
-
-            <div id="chatBox" class="post">
-                <div><strong>KD User:</strong> Hello! 👋</div>
+            <div class="story add-story">
+                <div class="story-circle">＋</div>
+                <span>Your Story</span>
             </div>
 
-            <input
-                id="messageInput"
-                type="text"
-                placeholder="Write a message..."
-                style="margin-top:12px;"
-            >
+            <div class="story">
+                <div class="story-circle">👤</div>
+                <span>Friends</span>
+            </div>
 
-            <button class="primary" onclick="sendMessage()">
-                Send
-            </button>
+            <div class="story">
+                <div class="story-circle">🌟</div>
+                <span>Star</span>
+            </div>
+
+            <div class="story">
+                <div class="story-circle">🎵</div>
+                <span>Music</span>
+            </div>
+
+            <div class="story">
+                <div class="story-circle">🌍</div>
+                <span>Travel</span>
+            </div>
+
         </div>
 
     </section>
 
-    <!-- PROFILE -->
-    <section id="profile" class="section">
 
-        <div class="card welcome">
+    <!-- CREATE POST -->
+    <section class="create-post">
 
-            <div class="avatar">👤</div>
+        <div class="profile-icon">K</div>
 
-            <h2>KD User</h2>
-            <p>Welcome to my KD profile.</p>
+        <button onclick="createPost()">
+            What's happening on KD?
+        </button>
 
-            <div class="stats">
-                <div>
-                    <strong>0</strong>
-                    Posts
-                </div>
+    </section>
+
+
+    <!-- POST -->
+    <main id="feed">
+
+        <article class="post">
+
+            <div class="post-header">
+
+                <div class="profile-icon blue">K</div>
 
                 <div>
-                    <strong>0</strong>
-                    Followers
+                    <strong>Krishnadev</strong>
+                    <small>Just now · 🌍</small>
                 </div>
 
-                <div>
-                    <strong>0</strong>
-                    Following
-                </div>
             </div>
 
-        </div>
+            <p class="post-text">
+                Welcome to <strong>KD Social App!</strong> 🎉
+                Connect, share and discover something new.
+            </p>
 
-    </section>
-
-    <!-- SETTINGS -->
-    <section id="settings" class="section">
-
-        <div class="card">
-            <h2>⚙️ KD Settings</h2>
-
-            <div class="post">
-                🔐 Privacy Settings
+            <div class="post-image">
+                <span>KD</span>
             </div>
 
-            <div class="post">
-                🔔 Notification Settings
+            <div class="post-actions">
+
+                <button onclick="likePost(this)">
+                    ❤️ <span>0</span>
+                </button>
+
+                <button onclick="commentPost()">
+                    💬 Comment
+                </button>
+
+                <button onclick="sharePost()">
+                    ↗️ Share
+                </button>
+
             </div>
 
-            <div class="post">
-                🛡️ Safety Center
-            </div>
+        </article>
 
-            <div class="post">
-                ℹ️ About KD
-            </div>
-        </div>
+    </main>
 
-    </section>
 
-</div>
+    <!-- BOTTOM NAVIGATION -->
+    <nav class="bottom-nav">
 
-<!-- BOTTOM NAVIGATION -->
-<nav class="nav">
+        <button class="active" onclick="showMessage('Home')">
+            🏠
+            <span>Home</span>
+        </button>
 
-    <button class="active" onclick="showSection('home', this)">
-        🏠<br>Home
-    </button>
+        <button onclick="showMessage('Search')">
+            🔍
+            <span>Search</span>
+        </button>
 
-    <button onclick="showSection('search', this)">
-        🔍<br>Search
-    </button>
+        <button onclick="createPost()">
+            ➕
+            <span>Create</span>
+        </button>
 
-    <button onclick="showSection('create', this)">
-        ➕<br>Create
-    </button>
+        <button onclick="showMessage('Notifications')">
+            🔔
+            <span>Alerts</span>
+        </button>
 
-    <button onclick="showSection('notifications', this)">
-        🔔<br>Alerts
-    </button>
+        <button onclick="showMessage('Profile')">
+            👤
+            <span>Profile</span>
+        </button>
 
-    <button onclick="showSection('messages', this)">
-        💬<br>Chat
-    </button>
+    </nav>
 
-    <button onclick="showSection('profile', this)">
-        👤<br>Profile
-    </button>
 
-</nav>
-
-<script>
-
-function showSection(sectionId, clickedButton) {
-
-    document.querySelectorAll(".section").forEach(function(section) {
-        section.classList.remove("active");
-    });
-
-    document.getElementById(sectionId).classList.add("active");
-
-    document.getElementById("pageTitle").textContent =
-        sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
-
-    if (clickedButton) {
-        document.querySelectorAll(".nav button").forEach(function(button) {
-            button.classList.remove("active");
-        });
-
-        clickedButton.classList.add("active");
-    }
-
-    window.scrollTo(0, 0);
-}
-
-function toggleLike(button) {
-
-    if (button.textContent.includes("Like")) {
-        button.textContent = "❤️ Liked";
-    } else {
-        button.textContent = "❤️ Like";
-    }
-}
-
-function createPost() {
-
-    const input = document.getElementById("postText");
-    const message = document.getElementById("createMessage");
-    const text = input.value.trim();
-
-    if (text === "") {
-        message.textContent = "Please write something.";
-        return;
-    }
-
-    const post = document.createElement("div");
-    post.className = "post";
-
-    const user = document.createElement("div");
-    user.className = "post-user";
-    user.textContent = "KD User";
-
-    const content = document.createElement("div");
-    content.textContent = text;
-
-    const like = document.createElement("button");
-    like.textContent = "❤️ Like";
-    like.style.marginTop = "10px";
-    like.onclick = function() {
-        toggleLike(like);
-    };
-
-    post.appendChild(user);
-    post.appendChild(content);
-    post.appendChild(like);
-
-    document.getElementById("feed").prepend(post);
-
-    input.value = "";
-    message.textContent = "Post published! 🎉";
-
-    setTimeout(function() {
-        message.textContent = "";
-    }, 2000);
-
-    showSection("home");
-}
-
-function searchKD() {
-
-    const query = document.getElementById("searchInput")
-        .value
-        .trim()
-        .toLowerCase();
-
-    const results = document.getElementById("searchResults");
-
-    if (query === "") {
-        results.innerHTML = "<p>Please enter a search.</p>";
-        return;
-    }
-
-    const items = [
-        "KD User",
-        "KD Creator",
-        "KD Community",
-        "KD Social App",
-        "KD Shorts"
-    ];
-
-    const matches = items.filter(function(item) {
-        return item.toLowerCase().includes(query);
-    });
-
-    results.innerHTML = "";
-
-    if (matches.length === 0) {
-        results.innerHTML = "<p>No results found.</p>";
-        return;
-    }
-
-    matches.forEach(function(item) {
-
-        const result = document.createElement("div");
-        result.className = "search-result";
-        result.textContent = "🔎 " + item;
-
-        results.appendChild(result);
-    });
-}
-
-function sendMessage() {
-
-    const input = document.getElementById("messageInput");
-    const text = input.value.trim();
-
-    if (text === "") {
-        return;
-    }
-
-    const message = document.createElement("div");
-    message.className = "post";
-    message.style.marginTop = "10px";
-    message.innerHTML = "<strong>You:</strong> " + escapeHTML(text);
-
-    document.getElementById("chatBox").appendChild(message);
-
-    input.value = "";
-}
-
-function escapeHTML(text) {
-
-    const div = document.createElement("div");
-    div.textContent = text;
-
-    return div.innerHTML;
-}
-
-</script>
-<script src="app.js"></script>
+    <!-- JAVASCRIPT -->
     <script>
-if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function () {
-        navigator.serviceWorker.register("service-worker.js")
-            .then(function () {
-                console.log("KD service worker registered.");
-            })
-            .catch(function (error) {
-                console.log("Service worker registration failed:", error);
-            });
-    });
-}
-</script>
+
+        function likePost(button) {
+
+            const count = button.querySelector("span");
+
+            let likes = Number(count.textContent);
+
+            likes++;
+
+            count.textContent = likes;
+
+        }
+
+
+        function commentPost() {
+
+            alert("Comments feature is coming soon!");
+
+        }
+
+
+        function sharePost() {
+
+            alert("Share feature is coming soon!");
+
+        }
+
+
+        function createPost() {
+
+            alert("Create Post feature is coming soon!");
+
+        }
+
+
+        function openSearch() {
+
+            alert("KD Search is coming soon!");
+
+        }
+
+
+        function showMessage(page) {
+
+            alert(page + " section is coming soon!");
+
+        }
+
+    </script>
+
 </body>
 </html>
