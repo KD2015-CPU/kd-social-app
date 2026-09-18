@@ -24,9 +24,7 @@ function showSection(sectionId) {
 
     document.getElementById("pageTitle").textContent =
         titles[sectionId] || "KD";
-
 }
-
 
 function toggleLike(button) {
 
@@ -37,9 +35,7 @@ function toggleLike(button) {
         button.dataset.liked = "true";
         button.textContent = "💖 Liked";
     }
-
 }
-
 
 function createPost() {
 
@@ -74,9 +70,7 @@ function createPost() {
     textBox.value = "";
 
     showSection("home");
-
 }
-
 
 function searchKD() {
 
@@ -93,9 +87,7 @@ function searchKD() {
     }
 
     result.textContent = "Searching KD for: " + text;
-
 }
-
 
 function sendMessage() {
 
@@ -114,5 +106,4 @@ function sendMessage() {
     result.textContent = "Message sent: " + message;
 
     input.value = "";
-
 }
